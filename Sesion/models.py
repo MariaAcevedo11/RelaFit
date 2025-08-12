@@ -49,3 +49,20 @@ class Usuario(models.Model):
 
     def __str__(self):
         return self.nombreCompletoUsuario
+    
+class Cupon(models.Model):
+
+    idCupon = models.IntegerField(primary_key = True)
+    descuentoCupon = models.IntegerField()
+    codigoCupon = models.CharField()
+    estadoCupon = models.BooleanField()
+    fechaVencimientoCupon = models.DateField()
+
+class Producto(models.Model):
+
+    idProducto = models.IntegerField(primary_key = True)
+    tipoProducto = models.CharField()
+    cantidadDeProducto = models.IntegerField()
+    marcaProducto = models.CharField()
+    fechaVencimientoProducto = models.DateField()
+    
