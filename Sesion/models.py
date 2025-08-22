@@ -10,11 +10,10 @@ class Sesion(models.Model):
     categoriaSesion = models.CharField()
     descripcionSesion = models.TextField()
     precioSesion = models.FloatField()
-    imagenSesion = models.CharField()
     duracionSesion = models.IntegerField() #en minutos
     horaSesion = models.CharField()
     disponibleSesion = models.BooleanField()
-    sesionesReserva = models.ForeignKey('Sesion', on_delete=models.CASCADE, related_name='reservas') # relacion uno a muchos con reserva 
+    sesionesReserva = models.ForeignKey('Sesion', on_delete=models.CASCADE, related_name='reservas', null=True, blank=True) # relacion uno a muchos con reserva 
 
     def __str__(self):
         return self.nombreSesion
@@ -25,8 +24,8 @@ class Reseña(models.Model):
     comentarioReseña = models.TextField()
     calificacionResñea = models.FloatField()
     fechaReseña = models.DateField()
-    reseñaSesion = models.ForeignKey('Sesion', on_delete=models.CASCADE, related_name='reseñas')
-    reseñaUser = models.ForeignKey('Usuario', on_delete=models.CASCADE, related_name='reseñas') # relacion uno a muchos con usuario
+    reseñaSesion = models.ForeignKey('Sesion', on_delete=models.CASCADE, related_name='reseñas', null=True, blank=True)
+    reseñaUser = models.ForeignKey('Usuario', on_delete=models.CASCADE, related_name='reseñas', null=True, blank=True) # relacion uno a muchos con usuario
 
     def __str__(self):
         return f"Reseña de {self.usuario.username} - {self.reseñaSesion.nombreSesion}"
@@ -38,8 +37,8 @@ class Reserva(models.Model):
     fechaReserva = models.DateField()
     horaReserva = models.CharField()
     precioFinalReserva = models.FloatField()
-    reservasUser = models.ForeignKey('Usuario', on_delete=models.CASCADE, related_name='reservas') #relacion uno a muchos con usuario
-    reservaCupon = models.OneToOneField('Cupon', on_delete=models.CASCADE,primary_key=True) # relacion uno a uno con cupon
+    reservasUser = models.ForeignKey('Usuario', on_delete=models.CASCADE, related_name='reservas', null=True, blank=True) #relacion uno a muchos con usuario
+    reservaCupon = models.OneToOneField('Cupon', on_delete=models.CASCADE, null=True, blank=True) # relacion uno a uno con cupon
 
     def __str__(self):
         return f"Reserva {self.idReserva} de {self.usuario.username}"
@@ -69,4 +68,4 @@ class Producto(models.Model):
     cantidadDeProducto = models.IntegerField()
     marcaProducto = models.CharField()
     fechaVencimientoProducto = models.DateField()
-    productoReserva = models.ForeignKey('Reserva', on_delete=models.CASCADE, related_name='productos')
+    productoReserva = models.ForeignKey('Reserva', on_delete=models.CASCADE, related_name='productos', null=True, blank=True)

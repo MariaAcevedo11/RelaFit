@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RelaFit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'pink-bright': '#ff1493',
+                        'pink-bright-dark': '#e6127f'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-gray-50 flex flex-col">
+    <!-- Navbar -->
+    <nav class="bg-pink-bright shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-white">RelaFit</h1>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="{% url 'home' %}" 
+                        class="text-white hover:bg-pink-bright-dark hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out transform hover:scale-105">
+                            Home
+                        </a>
+                        <a href="{% url 'login' %}" 
+                        class="text-white hover:bg-pink-bright-dark hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out transform hover:scale-105">
+                            Login
+                        </a>
+                        <a href="{% url 'registro' %}" 
+                        class="bg-white text-pink-bright hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out transform hover:scale-105 shadow">
+                            Registro
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" class="text-white hover:text-gray-200 focus:outline-none focus:text-gray-200" onclick="toggleMobileMenu()">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-pink-bright-dark">
+                <a href="{% url 'home' %}" 
+                class="text-white hover:bg-pink-bright block px-3 py-2 rounded-md text-base font-medium transition duration-300">
+                Home
+                </a>
+                <a href="{% url 'login' %}" 
+                class="text-white hover:bg-pink-bright-dark hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out transform hover:scale-105">
+                    Login
+                </a>
+                <a href="{% url 'registro' %}" 
+                class="bg-white text-pink-bright hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out transform hover:scale-105 shadow">
+                    Registro
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow">
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <!-- Aquí Django insertará el contenido -->
+        {% block content %}
+        
+        {% endblock %}
+            </div>
+        </main>
+
+    <!-- Footer -->
+    <footer class="bg-pink-bright">
+        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p class="text-white font-medium">RelaFit - 2025 ©</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
