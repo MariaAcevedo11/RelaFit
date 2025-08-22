@@ -37,10 +37,6 @@ class HomePageView(TemplateView):
 
         return context
 
-class SesionPageView(TemplateView):
-
-    template_name = "sesion.html"
-
 class LoginPageView(TemplateView):
 
     template_name = "login.html"
@@ -48,3 +44,8 @@ class LoginPageView(TemplateView):
 class RegistroPageView(TemplateView):
 
     template_name = "registro.html"
+
+
+class ProductoPageView(TemplateView):
+
+    template_name = "producto.html"

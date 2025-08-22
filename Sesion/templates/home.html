@@ -53,22 +53,23 @@
     <!-- Grid de sesiones -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {% for sesion in sesiones %}
-        <div onclick="openSidebar('{{ sesion.idSesion }}')"
-             class="bg-white rounded-2xl shadow-md p-5 cursor-pointer transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+            <div onclick="openSidebar('{{ sesion.idSesion }}')"
+            class="bg-white rounded-2xl shadow-md p-5 cursor-pointer transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+
+            {% if sesion.imagenSesion %}
+                <img src="{{ sesion.imagenSesion.url }}" alt="{{ sesion.nombreSesion }}"
+                    class="w-full h-40 object-cover rounded-xl mb-3">
+            {% else %}
+                <div class="w-full h-40 bg-gray-200 flex items-center justify-center rounded-xl mb-3 text-gray-500">
+                    
+                </div>
+            {% endif %}
+
             <h3 class="text-lg font-semibold text-pink-bright">{{ sesion.nombreSesion }}</h3>
             <p class="text-sm text-gray-600">Categoría: {{ sesion.categoriaSesion }}</p>
             <p class="text-sm text-gray-600">Duración: {{ sesion.duracionSesion }} min</p>
             <p class="text-sm text-gray-600">Hora: {{ sesion.horaSesion }}</p>
-
-            <!-- Info oculta para sidebar -->
-            <div id="sesion-{{ sesion.idSesion }}" class="hidden">
-                <h2 class="text-xl font-bold text-pink-bright mb-2">{{ sesion.nombreSesion }}</h2>
-                <p class="text-gray-700"><strong>Categoría:</strong> {{ sesion.categoriaSesion }}</p>
-                <p class="text-gray-700"><strong>Duración:</strong> {{ sesion.duracionSesion }} min</p>
-                <p class="text-gray-700"><strong>Hora:</strong> {{ sesion.horaSesion }}</p>
-                <p class="text-gray-700"><strong>Precio:</strong> ${{ sesion.precioSesion }}</p>
-                <p class="mt-3 text-gray-600">{{ sesion.descripcionSesion }}</p>
-            </div>
+        </div>
         </div>
         {% empty %}
         <p class="text-center text-gray-500 col-span-3">No hay sesiones registradas.</p>
@@ -80,7 +81,7 @@
 <div id="sidebar" class="fixed top-0 right-0 h-full w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50 overflow-y-auto">
     <div class="p-6">
         <button onclick="closeSidebar()" class="text-gray-500 hover:text-gray-800 mb-4">
-            ✖ Cerrar
+            X Cerrar
         </button>
 
         <div id="sidebar-content">

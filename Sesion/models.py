@@ -9,6 +9,7 @@ class Sesion(models.Model):
     nombreSesion = models.CharField()
     categoriaSesion = models.CharField()
     descripcionSesion = models.TextField()
+    imagenSesion = models.ImageField(upload_to="sesiones/", blank=True, null=True)
     precioSesion = models.FloatField()
     duracionSesion = models.IntegerField() #en minutos
     horaSesion = models.CharField()
@@ -22,7 +23,7 @@ class Reseña(models.Model):
 
     idReseña =  models.IntegerField(primary_key= True)
     comentarioReseña = models.TextField()
-    calificacionResñea = models.FloatField()
+    calificacionReseña = models.FloatField()
     fechaReseña = models.DateField()
     reseñaSesion = models.ForeignKey('Sesion', on_delete=models.CASCADE, related_name='reseñas', null=True, blank=True)
     reseñaUser = models.ForeignKey('Usuario', on_delete=models.CASCADE, related_name='reseñas', null=True, blank=True) # relacion uno a muchos con usuario
@@ -66,6 +67,7 @@ class Producto(models.Model):
     idProducto = models.IntegerField(primary_key = True)
     tipoProducto = models.CharField()
     cantidadDeProducto = models.IntegerField()
+    imagenProducto = models.ImageField(upload_to="productos/", blank=True, null=True)
     marcaProducto = models.CharField()
     fechaVencimientoProducto = models.DateField()
     productoReserva = models.ForeignKey('Reserva', on_delete=models.CASCADE, related_name='productos', null=True, blank=True)
