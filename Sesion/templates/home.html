@@ -6,7 +6,6 @@
 
     <!-- Filtros pequeños -->
     <form method="get" class="flex items-center space-x-6 mb-4">
-
         <!-- Filtro Categoría -->
         <div class="flex items-center">
             <span class="text-sm text-gray-700 mr-2">Categoría:</span>
@@ -14,9 +13,7 @@
                     class="px-2 py-1 rounded-md border border-gray-300 text-sm focus:ring-pink-bright focus:border-pink-bright">
                 <option value="">Todas</option>
                 {% for cat in categorias %}
-                    <option value="{{ cat }}" {% if cat == categoria_seleccionada %}selected{% endif %}>
-                        {{ cat }}
-                    </option>
+                    <option value="{{ cat }}" {% if cat == categoria_seleccionada %}selected{% endif %}>{{ cat }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -28,9 +25,7 @@
                     class="px-2 py-1 rounded-md border border-gray-300 text-sm focus:ring-pink-bright focus:border-pink-bright">
                 <option value="">Todas</option>
                 {% for dur in duraciones %}
-                    <option value="{{ dur }}" {% if dur == duracion_seleccionada %}selected{% endif %}>
-                        {{ dur }} min
-                    </option>
+                    <option value="{{ dur }}" {% if dur == duracion_seleccionada %}selected{% endif %}>{{ dur }} min</option>
                 {% endfor %}
             </select>
         </div>
@@ -42,9 +37,7 @@
                     class="px-2 py-1 rounded-md border border-gray-300 text-sm focus:ring-pink-bright focus:border-pink-bright">
                 <option value="">Todas</option>
                 {% for h in horas %}
-                    <option value="{{ h }}" {% if h == hora_seleccionada %}selected{% endif %}>
-                        {{ h }}
-                    </option>
+                    <option value="{{ h }}" {% if h == hora_seleccionada %}selected{% endif %}>{{ h }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -53,23 +46,25 @@
     <!-- Grid de sesiones -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {% for sesion in sesiones %}
-            <div onclick="openSidebar('{{ sesion.idSesion }}')"
-            class="bg-white rounded-2xl shadow-md p-5 cursor-pointer transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+        <div onclick="document.getElementById('sidebar-{{ sesion.idSesion }}').classList.remove('translate-x-full')"
+             class="bg-white rounded-2xl shadow-md p-5 cursor-pointer transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
 
+            <!-- Imagen uniforme -->
             {% if sesion.imagenSesion %}
-                <img src="{{ sesion.imagenSesion.url }}" alt="{{ sesion.nombreSesion }}"
-                    class="w-full h-40 object-cover rounded-xl mb-3">
+            <div class="w-full h-40 overflow-hidden rounded-xl mb-3">
+                <img src="{{ sesion.imagenSesion.url }}" alt="{{ sesion.nombreSesion }}" class="w-full h-full object-cover">
+            </div>
             {% else %}
-                <div class="w-full h-40 bg-gray-200 flex items-center justify-center rounded-xl mb-3 text-gray-500">
-                    
-                </div>
+            <div class="w-full h-40 bg-gray-200 flex items-center justify-center rounded-xl mb-3 text-gray-500">
+                Sin imagen
+            </div>
             {% endif %}
 
+            <!-- Información visible en la tarjeta -->
             <h3 class="text-lg font-semibold text-pink-bright">{{ sesion.nombreSesion }}</h3>
             <p class="text-sm text-gray-600">Categoría: {{ sesion.categoriaSesion }}</p>
             <p class="text-sm text-gray-600">Duración: {{ sesion.duracionSesion }} min</p>
             <p class="text-sm text-gray-600">Hora: {{ sesion.horaSesion }}</p>
-        </div>
         </div>
         {% empty %}
         <p class="text-center text-gray-500 col-span-3">No hay sesiones registradas.</p>
@@ -77,45 +72,25 @@
     </div>
 </div>
 
-<!-- Sidebar -->
-<div id="sidebar" class="fixed top-0 right-0 h-full w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50 overflow-y-auto">
+<!-- Sidebars de sesiones -->
+{% for sesion in sesiones %}
+<div id="sidebar-{{ sesion.idSesion }}" class="fixed top-0 right-0 h-full w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50 overflow-y-auto">
     <div class="p-6">
-        <button onclick="closeSidebar()" class="text-gray-500 hover:text-gray-800 mb-4">
-            X Cerrar
-        </button>
+        <button onclick="document.getElementById('sidebar-{{ sesion.idSesion }}').classList.add('translate-x-full')" class="text-gray-500 hover:text-gray-800 mb-4">X Cerrar</button>
 
-        <div id="sidebar-content">
-            <!-- Aquí se inyecta la sesión seleccionada -->
-        </div>
+        <h2 class="text-xl font-bold mb-2">{{ sesion.nombreSesion }}</h2>
+        <p class="text-sm text-gray-600"><strong class="text-black">Categoría:</strong> {{ sesion.categoriaSesion }}</p>
+        <p class="text-sm text-gray-600"><strong class="text-black">Duración:</strong> {{ sesion.duracionSesion }} min</p>
+        <p class="text-sm text-gray-600"><strong class="text-black">Hora:</strong> {{ sesion.horaSesion }}</p>
+        <p class="text-sm text-gray-600"><strong class="text-black">Precio:</strong> ${{ sesion.precioSesion }}</p>
+        <p class="text-sm text-gray-600 mt-2"><strong class="text-black">Descripción:</strong> {{ sesion.descripcionSesion }}</p>
 
         <div class="mt-6">
-            <a id="reserva-link" href="#" 
-               class="block bg-pink-bright hover:bg-pink-bright-dark text-white text-center py-3 rounded-xl shadow-md font-semibold transition duration-300">
+            <a href="/reserva/" class="block bg-pink-bright hover:bg-pink-bright-dark text-white text-center py-3 rounded-xl shadow-md font-semibold transition duration-300">
                 Reservar
             </a>
         </div>
     </div>
 </div>
-
-<script>
-    function openSidebar(id) {
-        const sidebar = document.getElementById("sidebar");
-        const content = document.getElementById("sidebar-content");
-
-        // tomar el contenido oculto de la tarjeta
-        const sesionData = document.getElementById("sesion-" + id).innerHTML;
-
-        content.innerHTML = sesionData;
-
-        // actualizar link a reserva
-        document.getElementById("reserva-link").href = "/reserva/";
-
-        sidebar.classList.remove("translate-x-full");
-    }
-
-    function closeSidebar() {
-        document.getElementById("sidebar").classList.add("translate-x-full");
-    }
-</script>
-
+{% endfor %}
 {% endblock %}
