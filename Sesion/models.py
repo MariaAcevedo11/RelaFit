@@ -67,6 +67,7 @@ class Producto(models.Model):
     idProducto = models.IntegerField(primary_key = True)
     tipoProducto = models.CharField()
     cantidadDeProducto = models.IntegerField()
+    precioDeProducto = models.IntegerField()
     imagenProducto = models.ImageField(upload_to="productos/", blank=True, null=True)
     marcaProducto = models.CharField()
     fechaVencimientoProducto = models.DateField()
