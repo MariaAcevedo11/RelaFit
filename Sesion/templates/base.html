@@ -39,14 +39,23 @@
                         class="text-white hover:bg-pink-bright-dark hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out transform hover:scale-105">
                             Productos
                         </a>
-                        <a href="{% url 'login' %}" 
-                        class="text-white hover:bg-pink-bright-dark hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out transform hover:scale-105">
-                            Login
-                        </a>
-                        <a href="{% url 'registro' %}" 
-                        class="bg-white text-pink-bright hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out transform hover:scale-105 shadow">
-                            Registro
-                        </a>
+
+                        {% if request.session.usuario_id %}
+                            <span class="text-white px-3 py-2 rounded-md text-sm font-medium">Hola, {{ request.session.usuario_nombre }}</span>
+                            <a href="{% url 'logout' %}" 
+                            class="bg-white text-pink-bright hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out transform hover:scale-105 shadow">
+                                Cerrar sesión
+                            </a>
+                        {% else %}
+                            <a href="{% url 'login' %}" 
+                            class="text-white hover:bg-pink-bright-dark hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out transform hover:scale-105">
+                                Login
+                            </a>
+                            <a href="{% url 'registro' %}" 
+                            class="bg-white text-pink-bright hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out transform hover:scale-105 shadow">
+                                Registro
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
                 
@@ -68,14 +77,27 @@
                 class="text-white hover:bg-pink-bright block px-3 py-2 rounded-md text-base font-medium transition duration-300">
                 Home
                 </a>
-                <a href="{% url 'login' %}" 
-                class="text-white hover:bg-pink-bright-dark hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out transform hover:scale-105">
-                    Login
+                <a href="{% url 'producto' %}" 
+                class="text-white hover:bg-pink-bright-dark hover:text-white px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out transform hover:scale-105">
+                    Productos
                 </a>
-                <a href="{% url 'registro' %}" 
-                class="bg-white text-pink-bright hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out transform hover:scale-105 shadow">
-                    Registro
-                </a>
+
+                {% if request.session.usuario_id %}
+                    <span class="text-white block px-3 py-2 rounded-md text-base font-medium">Hola, {{ request.session.usuario_nombre }}</span>
+                    <a href="{% url 'logout' %}" 
+                    class="bg-white text-pink-bright block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out transform hover:scale-105 shadow">
+                        Cerrar sesión
+                    </a>
+                {% else %}
+                    <a href="{% url 'login' %}" 
+                    class="text-white hover:bg-pink-bright-dark hover:text-white px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out transform hover:scale-105">
+                        Login
+                    </a>
+                    <a href="{% url 'registro' %}" 
+                    class="bg-white text-pink-bright block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out transform hover:scale-105 shadow">
+                        Registro
+                    </a>
+                {% endif %}
             </div>
         </div>
     </nav>
@@ -85,10 +107,9 @@
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <!-- Aquí Django insertará el contenido -->
         {% block content %}
-        
         {% endblock %}
-            </div>
-        </main>
+    </div>
+    </main>
 
     <!-- Footer -->
     <footer class="bg-pink-bright">
@@ -107,3 +128,4 @@
     </script>
 </body>
 </html>
+
