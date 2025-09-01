@@ -7,7 +7,10 @@
 
     <!-- Grid de productos -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
         {% for producto in productos %}
+
+        
         <div onclick="document.getElementById('sidebar-{{ producto.idProducto }}').classList.remove('translate-x-full')"
              class="bg-white rounded-2xl shadow-md p-5 cursor-pointer transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
 
@@ -36,6 +39,7 @@
 
 <!-- Sidebars de productos -->
 {% for producto in productos %}
+
 <div id="sidebar-{{ producto.idProducto }}" class="fixed top-0 right-0 h-full w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50 overflow-y-auto">
     <div class="p-6">
         <button onclick="document.getElementById('sidebar-{{ producto.idProducto }}').classList.add('translate-x-full')" class="text-gray-500 hover:text-gray-800 mb-4">X Cerrar</button>
