@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
  
 # Create your models here.
 
@@ -65,9 +66,29 @@ class Cupon(models.Model):
 class Producto(models.Model):
 
     idProducto = models.IntegerField(primary_key = True)
+    nombreProducto = models.CharField(blank=True, null=True)
     tipoProducto = models.CharField()
     cantidadDeProducto = models.IntegerField()
+    precioDeProducto = models.IntegerField()
     imagenProducto = models.ImageField(upload_to="productos/", blank=True, null=True)
     marcaProducto = models.CharField()
     fechaVencimientoProducto = models.DateField()
     productoReserva = models.ForeignKey('Reserva', on_delete=models.CASCADE, related_name='productos', null=True, blank=True)
+
+class Carrito(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Carrito de {self.usuario.nombreCompletoUsuario}"
+
+    def total(self):
+        return sum(item.subtotal() for item in self.items.all())
+
+
+class ItemCarrito(models.Model):
+    carrito = models.ForeignKey(Carrito, related_name="items", on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField(default=1)
+
+    def subtotal(self):
+        return self.producto.precioDeProducto * self.cantidad

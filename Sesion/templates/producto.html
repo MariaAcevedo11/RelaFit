@@ -5,6 +5,33 @@
     <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Productos Disponibles</h2>
     <h3 class="text-lg font-light text-gray-700 mb-6 text-center">Conoce y adquiere nuestros productos</h3>
 
+    <!-- 🔍 Filtros pequeños -->
+    <form method="get" class="flex items-center space-x-6 mb-4">
+        <!-- Filtro Marca -->
+        <div class="flex items-center">
+            <span class="text-sm text-gray-700 mr-2">Marca:</span>
+            <select name="marca" onchange="this.form.submit()"
+                    class="px-2 py-1 rounded-md border border-gray-300 text-sm focus:ring-pink-bright focus:border-pink-bright">
+                <option value="">Todas</option>
+                {% for m in marcas %}
+                    <option value="{{ m }}" {% if m == request.GET.marca %}selected{% endif %}>{{ m }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Filtro Tipo -->
+        <div class="flex items-center">
+            <span class="text-sm text-gray-700 mr-2">Tipo:</span>
+            <select name="tipo" onchange="this.form.submit()"
+                    class="px-2 py-1 rounded-md border border-gray-300 text-sm focus:ring-pink-bright focus:border-pink-bright">
+                <option value="">Todos</option>
+                {% for t in tipos %}
+                    <option value="{{ t }}" {% if t == request.GET.tipo %}selected{% endif %}>{{ t }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </form>
+
     <!-- Grid de productos -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {% for producto in productos %}
@@ -14,7 +41,7 @@
             <!-- Imagen uniforme -->
             {% if producto.imagenProducto %}
             <div class="w-full h-40 overflow-hidden rounded-xl mb-3">
-                <img src="{{ producto.imagenProducto.url }}" alt="{{ producto.tipoProducto }}" class="w-full h-full object-cover">
+                <img src="{{ producto.imagenProducto.url }}" alt="{{ producto.nombreProducto }}" class="w-full h-full object-cover">
             </div>
             {% else %}
             <div class="w-full h-40 bg-gray-200 flex items-center justify-center rounded-xl mb-3 text-gray-500">
@@ -23,10 +50,12 @@
             {% endif %}
 
             <!-- Información visible en la tarjeta -->
-            <h3 class="text-lg font-semibold text-pink-bright">{{ producto.tipoProducto }}</h3>
+            <h3 class="text-lg font-semibold text-pink-bright">{{ producto.nombreProducto }}</h3>
+            <p class="text-sm text-gray-600">Tipo: {{ producto.tipoProducto }}</p>
             <p class="text-sm text-gray-600">Marca: {{ producto.marcaProducto }}</p>
             <p class="text-sm text-gray-600">Cantidad: {{ producto.cantidadDeProducto }}</p>
             <p class="text-sm text-gray-600">Vence: {{ producto.fechaVencimientoProducto }}</p>
+            <p class="text-sm text-gray-600 font-bold">Precio: ${{ producto.precioDeProducto }}</p>
         </div>
         {% empty %}
         <p class="text-center text-gray-500 col-span-3">No hay productos registrados.</p>
@@ -40,10 +69,12 @@
     <div class="p-6">
         <button onclick="document.getElementById('sidebar-{{ producto.idProducto }}').classList.add('translate-x-full')" class="text-gray-500 hover:text-gray-800 mb-4">X Cerrar</button>
 
-        <h2 class="text-xl font-bold mb-2">{{ producto.tipoProducto }}</h2>
+        <h2 class="text-xl font-bold mb-2">{{ producto.nombreProducto }}</h2>
+        <p class="text-sm text-gray-600"><strong class="text-black">Tipo:</strong> {{ producto.tipoProducto }}</p>
         <p class="text-sm text-gray-600"><strong class="text-black">Marca:</strong> {{ producto.marcaProducto }}</p>
         <p class="text-sm text-gray-600"><strong class="text-black">Cantidad:</strong> {{ producto.cantidadDeProducto }}</p>
         <p class="text-sm text-gray-600"><strong class="text-black">Fecha Vencimiento:</strong> {{ producto.fechaVencimientoProducto }}</p>
+        <p class="text-sm text-gray-600"><strong class="text-black">Precio:</strong> ${{ producto.precioDeProducto }}</p>
         
         {% if producto.productoReserva %}
         <p class="text-sm text-gray-600"><strong class="text-black">Reserva asociada:</strong> {{ producto.productoReserva }}</p>
