@@ -66,6 +66,7 @@ class Cupon(models.Model):
 class Producto(models.Model):
 
     idProducto = models.IntegerField(primary_key = True)
+    nombreProducto = models.CharField(blank=True, null=True)
     tipoProducto = models.CharField()
     cantidadDeProducto = models.IntegerField()
     precioDeProducto = models.IntegerField()

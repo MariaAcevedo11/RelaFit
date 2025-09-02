@@ -50,14 +50,40 @@ class RegistroPageView(TemplateView):
 
 
 class ProductoPageView(TemplateView):
-
+    
     template_name = "producto.html"
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['productos'] = Producto.objects.all()
+        
+        productos = Producto.objects.all()
+
+        # Filtros
+        marca = self.request.GET.get("marca")
+        tipo = self.request.GET.get("tipo")
+        precio_min = self.request.GET.get("precio_min")
+        precio_max = self.request.GET.get("precio_max")
+
+        if marca and marca != "":  
+            productos = productos.filter(marcaProducto__icontains=marca)
+        
+        if tipo and tipo != "":  
+            productos = productos.filter(tipoProducto__icontains=tipo)
+
+        if precio_min:  
+            productos = productos.filter(precioDeProducto__gte=precio_min)
+        
+        if precio_max:  
+            productos = productos.filter(precioDeProducto__lte=precio_max)
+
+        context["productos"] = productos
+
+        # Para llenar los selects dinámicamente
+        context["marcas"] = Producto.objects.values_list("marcaProducto", flat=True).distinct()
+        context["tipos"] = Producto.objects.values_list("tipoProducto", flat=True).distinct()
+
         return context
+
 
 
 ## testing
