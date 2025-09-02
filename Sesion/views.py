@@ -94,7 +94,7 @@ class RegistroPageView(TemplateView):
 
         return redirect("home")
 
-class LogoutView(View):
+class LogoutPageView(View):
     def get(self, request):
         request.session.flush()
         return redirect("login")
@@ -139,7 +139,12 @@ class ProductoPageView(TemplateView):
 
 ## testing
 
-""" class CarritoPageView(TemplateView):
+
+class CarritoPageView(TemplateView):
+
+    template_name = "carrito.html" 
+    
+    
     @login_required
     def ver_carrito(request):
         carrito, _ = Carrito.objects.get_or_create(usuario=request.user)
@@ -162,4 +167,3 @@ class ProductoPageView(TemplateView):
         item = get_object_or_404(ItemCarrito, id=item_id, carrito__usuario=request.user)
         item.delete()
         return redirect("ver_carrito")
-"""
