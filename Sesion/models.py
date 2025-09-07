@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 class Sesion(models.Model):
 
-    idSesion = models.IntegerField(primary_key= True)
+    idSesion = models.AutoField(primary_key= True)
     nombreSesion = models.CharField()
     categoriaSesion = models.CharField()
     descripcionSesion = models.TextField()
@@ -22,20 +22,20 @@ class Sesion(models.Model):
 
 class Reseña(models.Model):
 
-    idReseña =  models.IntegerField(primary_key= True)
+    idReseña =  models.AutoField(primary_key= True)
     comentarioReseña = models.TextField()
-    calificacionReseña = models.FloatField()
-    fechaReseña = models.DateField()
+    calificacionReseña = models.IntegerField()
+    fechaReseña = models.DateField(auto_now_add=True)
     reseñaSesion = models.ForeignKey('Sesion', on_delete=models.CASCADE, related_name='reseñas', null=True, blank=True)
-    reseñaUser = models.ForeignKey('Usuario', on_delete=models.CASCADE, related_name='reseñas', null=True, blank=True) # relacion uno a muchos con usuario
+    reseñaUsuario = models.ForeignKey('Usuario', on_delete=models.CASCADE, related_name='reseñas', null=True, blank=True) # relacion uno a muchos con usuario
 
     def __str__(self):
-        return f"Reseña de {self.usuario.username} - {self.reseñaSesion.nombreSesion}"
+        return f"Reseña de {self.reseñaUsuario.nombreCompletoUsuario} - {self.reseñaSesion.nombreSesion}"
     
 
 class Reserva(models.Model):
 
-    idReserva = models.IntegerField(primary_key= True)
+    idReserva = models.AutoField(primary_key= True)
     fechaReserva = models.DateField()
     horaReserva = models.CharField()
     precioFinalReserva = models.FloatField()
@@ -47,7 +47,7 @@ class Reserva(models.Model):
 
 class Usuario(models.Model):
     
-    idUsuario = models.IntegerField(primary_key = True)
+    idUsuario = models.AutoField(primary_key = True)
     nombreCompletoUsuario = models.CharField()
     correoUsuario = models.CharField()
     contraseñaUsuario = models.CharField()
@@ -57,7 +57,7 @@ class Usuario(models.Model):
     
 class Cupon(models.Model):
 
-    idCupon = models.IntegerField(primary_key = True)
+    idCupon = models.AutoField(primary_key = True)
     descuentoCupon = models.IntegerField()
     codigoCupon = models.CharField()
     estadoCupon = models.BooleanField()
@@ -65,7 +65,7 @@ class Cupon(models.Model):
 
 class Producto(models.Model):
 
-    idProducto = models.IntegerField(primary_key = True)
+    idProducto = models.AutoField(primary_key = True)
     nombreProducto = models.CharField(blank=True, null=True)
     tipoProducto = models.CharField()
     cantidadDeProducto = models.IntegerField()

@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-5xl mx-auto py-6 sm:px-6 lg:px-8">
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Foto -->
+        <div class="flex justify-center items-center">
+            {% if sesion.imagenSesion %}
+            <img src="{{ sesion.imagenSesion.url }}" 
+                 alt="{{ sesion.nombreSesion }}" 
+                 class="w-80 h-80 object-cover rounded-xl shadow-md">
+            {% else %}
+            <div class="w-80 h-80 bg-gray-200 flex items-center justify-center rounded-xl text-gray-500">
+                Sin imagen
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Info -->
+        <div class="flex flex-col">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">{{ sesion.nombreSesion }}</h2>
+            <p><strong>Categoría:</strong> {{ sesion.categoriaSesion }}</p>
+            <p><strong>Duración:</strong> {{ sesion.duracionSesion }} min</p>
+            <p><strong>Hora:</strong> {{ sesion.horaSesion }}</p>
+            <p><strong>Precio:</strong> ${{ sesion.precioSesion }}</p>
+
+            <p class="mt-4 leading-relaxed">
+                <strong>Descripción:</strong><br>{{ sesion.descripcionSesion }}
+            </p>
+
+            <!-- Botón reservar -->
+            <a href="/carrito/" 
+               class="mt-6 block bg-pink-bright hover:bg-pink-bright-dark text-white text-center py-3 rounded-xl shadow-md font-semibold transition">
+                Reservar
+            </a>
+        </div>
+    </div>
+
+    <hr class="my-6">
+
+    <!-- Formulario reseña -->
+    {% if request.session.usuario_id %}
+        <h3 class="text-lg font-semibold text-gray-800 mb-2">Añadir Reseña</h3>
+
+        <!-- Mensajes -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="p-3 mb-3 text-green-700 bg-green-100 border border-green-300 rounded-md">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post" action="{% url 'detalleSesion' sesion.idSesion %}" class="space-y-3 mb-4"> 
+            {% csrf_token %}
+
+            <!-- Calificación -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Calificación:</label>
+                <div class="rating flex flex-row-reverse justify-end space-x-1 mt-1">
+                    {% for i in "54321" %}
+                        <input type="radio" id="star{{ i }}-{{ sesion.idSesion }}" 
+                               name="calificacionReseña" 
+                               value="{{ i }}" 
+                               class="hidden peer">
+                        <label for="star{{ i }}-{{ sesion.idSesion }}" 
+                               class="cursor-pointer text-2xl text-gray-300 transition hover:text-yellow-400 peer-checked:text-yellow-400">
+                            ★
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Comentario -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Comentario:</label>
+                <textarea name="comentarioReseña" rows="3"
+                          class="w-full border rounded-md p-2"></textarea>
+            </div>
+
+            <button type="submit"
+                    class="bg-pink-bright hover:bg-pink-bright-dark text-white px-4 py-2 rounded-md">
+                Publicar Reseña
+            </button>
+        </form>
+    {% else %}
+        <p class="text-gray-500 mt-4">Inicia sesión para dejar una reseña.</p>
+    {% endif %}
+
+    <!-- Reseñas -->
+    <h3 class="text-xl font-semibold text-gray-800 mb-2">Reseñas</h3>
+    <div class="space-y-4 mb-6">
+        {% for reseña in sesion.reseñas.all %}
+            <div class="p-3 bg-gray-100 rounded-lg shadow-sm">
+                <p class="text-yellow-500 font-bold">⭐ {{ reseña.calificacionReseña }}/5</p>
+                <p class="text-gray-700 italic">"{{ reseña.comentarioReseña|default:"(Sin comentario)" }}"</p>
+                <p class="text-sm text-gray-500 mt-1">
+                    – {{ reseña.reseñaUsuario.nombreCompletoUsuario }} | {{ reseña.fechaReseña|date:"d/m/Y" }}
+                </p>
+            </div>
+        {% empty %}
+            <p class="text-gray-500 italic">No hay reseñas para esta sesión.</p>
+        {% endfor %}
+    </div>
+
+    <style>
+    .rating input:checked ~ label,
+    .rating label:hover,
+    .rating label:hover ~ label {
+        color: #facc15;
+    }
+    </style>
+
+</div>
+{% endblock %}

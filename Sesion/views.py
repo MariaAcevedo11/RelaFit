@@ -2,10 +2,13 @@ from django.views import View
 from django.views.generic import TemplateView
 from django.http import HttpResponseRedirect
 from .models import Sesion
-from .models import Usuario
+from .models import Usuario, Reseña
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Carrito, ItemCarrito, Producto
 from django.contrib.auth.decorators import login_required
+from .forms import ReseñaForm
+from django.contrib import messages
+
 
 class HomePageView(TemplateView):
     template_name = "home.html"
@@ -37,8 +40,41 @@ class HomePageView(TemplateView):
         context["duracion_seleccionada"] = duracion
         context["hora_seleccionada"] = hora
 
+        
         return context
 
+
+class SesionPageView(View):
+    def get(self, request, sesion_id):
+        sesion = get_object_or_404(Sesion, idSesion=sesion_id)
+        return render(request, "sesion.html", {
+            "sesion": sesion,
+        })
+
+    def post(self, request, sesion_id):
+        if not request.session.get("usuario_id"):
+            return redirect("login")
+
+        sesion = get_object_or_404(Sesion, idSesion=sesion_id)
+        usuario = get_object_or_404(Usuario, idUsuario=request.session["usuario_id"])
+
+        calificacion = request.POST.get("calificacionReseña")
+        comentario = request.POST.get("comentarioReseña")
+
+        if not calificacion or not comentario.strip():
+            messages.error(request, "Debes ingresar calificación y comentario.")
+            return redirect("detalleSesion", sesion_id=sesion.idSesion)
+
+        Reseña.objects.create(
+            reseñaSesion=sesion,
+            reseñaUsuario=usuario,
+            calificacionReseña=calificacion,
+            comentarioReseña=comentario,
+        )
+
+        messages.success(request, "¡Tu reseña fue publicada con éxito!")
+        return redirect("detalleSesion", sesion_id=sesion.idSesion)
+    
 class LoginPageView(View):
     template_name = "login.html"
 
@@ -58,8 +94,25 @@ class LoginPageView(View):
             return redirect("home")
         except Usuario.DoesNotExist:
             return render(request, self.template_name, {"error": "Usuario o contraseña inválidos"})
+        
 
 
+'''class AgregarReseñaView(View):
+    def post(self, request, sesion_id):
+        if not request.session.get("usuario_id"):
+            return redirect("login")  # Solo usuarios logueados
+
+        sesion = get_object_or_404(Sesion, idSesion=sesion_id)
+        usuario = get_object_or_404(Usuario, idUsuario=request.session["usuario_id"])
+
+        form = ReseñaForm(request.POST)
+        if form.is_valid():
+            nueva_reseña = form.save(commit=False)
+            nueva_reseña.reseñaSesion = sesion
+            nueva_reseña.reseñaUsuario = usuario
+            nueva_reseña.save()
+
+        return redirect("detalleSesion")'''  
 
 
 

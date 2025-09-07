@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("Sesion", "0005_rename_calificacionresñea_reseña_calificacionreseña"),
+        ("Sesion", "0004_remove_sesion_imagensesion_producto_productoreserva_and_more"),
     ]
 
     operations = [
