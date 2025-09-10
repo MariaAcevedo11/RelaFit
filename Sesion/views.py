@@ -8,6 +8,7 @@ from .models import Carrito, ItemCarrito, Producto
 from django.contrib.auth.decorators import login_required
 from .forms import ReseñaForm
 from django.contrib import messages
+from django.db.models import Avg
 
 
 class HomePageView(TemplateView):
@@ -44,11 +45,17 @@ class HomePageView(TemplateView):
         return context
 
 
+
 class SesionPageView(View):
     def get(self, request, sesion_id):
         sesion = get_object_or_404(Sesion, idSesion=sesion_id)
+
+        # Calcular promedio de las reseñas
+        promedio = sesion.reseñas.aggregate(promedio=Avg('calificacionReseña'))['promedio']
+
         return render(request, "sesion.html", {
             "sesion": sesion,
+            "promedio": promedio,  # 👈 pasamos al template
         })
 
     def post(self, request, sesion_id):
@@ -94,28 +101,7 @@ class LoginPageView(View):
             return redirect("home")
         except Usuario.DoesNotExist:
             return render(request, self.template_name, {"error": "Usuario o contraseña inválidos"})
-        
-
-
-'''class AgregarReseñaView(View):
-    def post(self, request, sesion_id):
-        if not request.session.get("usuario_id"):
-            return redirect("login")  # Solo usuarios logueados
-
-        sesion = get_object_or_404(Sesion, idSesion=sesion_id)
-        usuario = get_object_or_404(Usuario, idUsuario=request.session["usuario_id"])
-
-        form = ReseñaForm(request.POST)
-        if form.is_valid():
-            nueva_reseña = form.save(commit=False)
-            nueva_reseña.reseñaSesion = sesion
-            nueva_reseña.reseñaUsuario = usuario
-            nueva_reseña.save()
-
-        return redirect("detalleSesion")'''  
-
-
-
+    
 class RegistroPageView(TemplateView):
     template_name = "registro.html"
 

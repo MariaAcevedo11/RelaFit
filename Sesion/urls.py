@@ -1,7 +1,7 @@
 from django.urls import path 
 from .views import HomePageView, LoginPageView, RegistroPageView, ProductoPageView, LogoutPageView, CarritoPageView, SesionPageView 
-'''AgregarReseñaView,'''
-''' path("sesion/<int:sesion_id>/reseña/", AgregarReseñaView.as_view(), name="agregarReseña"),'''
+
+
 urlpatterns = [
     path("", HomePageView.as_view(), name = 'home'), 
     path("login/", LoginPageView.as_view(), name = 'login'),
