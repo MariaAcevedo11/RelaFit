@@ -15,8 +15,8 @@ class Sesion(models.Model):
     duracionSesion = models.IntegerField() #en minutos
     horaSesion = models.CharField()
     disponibleSesion = models.BooleanField()
-    sesionesReserva = models.ForeignKey('Reserva', on_delete=models.CASCADE, related_name='reservas', null=True, blank=True) # relacion uno a muchos con reserva 
-
+    reserva = models.ForeignKey('Reserva', on_delete=models.CASCADE, related_name="sesiones", null=True, blank=True)
+ 
     def __str__(self):
         return self.nombreSesion
 
@@ -42,9 +42,11 @@ class Reserva(models.Model):
     reservasUser = models.ForeignKey('Usuario', on_delete=models.CASCADE, related_name='reservas', null=True, blank=True) #relacion uno a muchos con usuario
     reservaCupon = models.OneToOneField('Cupon', on_delete=models.CASCADE, null=True, blank=True) # relacion uno a uno con cupon
     numeroPersonasReserva = models.IntegerField(null = True, blank = True)
+    
 
     def __str__(self):
-        return f"Reserva {self.idReserva} de {self.usuario.username}"
+         return f"Reserva {self.idReserva} de {self.reservasUser.nombreCompletoUsuario}"
+
 
 class Usuario(models.Model):
     
@@ -77,7 +79,7 @@ class Producto(models.Model):
     productoReserva = models.ForeignKey('Reserva', on_delete=models.CASCADE, related_name='productos', null=True, blank=True)
 
 class Carrito(models.Model):
-    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+    usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE, related_name="carrito")
 
     def __str__(self):
         return f"Carrito de {self.usuario.nombreCompletoUsuario}"
