@@ -28,39 +28,68 @@
                     <h1 class="text-2xl font-bold text-white">RelaFit</h1>
                 </div>
                 
-                <!-- Navigation Links -->
+                <!-- Navigation Links (Desktop) -->
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="{% url 'home' %}" 
-                        class="text-white hover:bg-pink-bright-dark hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out transform hover:scale-105">
-                            Home
-                        </a>
-                        <a href="{% url 'producto' %}" 
-                        class="text-white hover:bg-pink-bright-dark hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out transform hover:scale-105">
-                            Productos
-                        </a>
-
                         {% if request.session.usuario_id %}
-                            <span class="text-white px-3 py-2 rounded-md text-sm font-medium">Hola, {{ request.session.usuario_nombre }}</span>
-                            <a href="{% url 'logout' %}" 
-                            class="bg-white text-pink-bright hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out transform hover:scale-105 shadow">
-                                Cerrar sesión
-                            </a>
+                            {% if request.session.usuario_tipo == "admin" %}
+                                <!-- ADMIN -->
+                                <a href="{% url 'productos_list' %}" 
+                                class="text-white hover:bg-pink-bright-dark px-3 py-2 rounded-md text-sm font-medium">
+                                    Gestionar Productos
+                                </a>
+                                <a href="{% url 'sesiones_list' %}" 
+                                class="text-white hover:bg-pink-bright-dark px-3 py-2 rounded-md text-sm font-medium">
+                                    Gestionar Sesiones
+                                </a>
+                                <span class="text-white px-3 py-2 rounded-md text-sm font-medium">Hola, {{ request.session.usuario_nombre }}</span>
+                                <a href="{% url 'logout' %}" 
+                                class="bg-white text-pink-bright hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium shadow">
+                                    Cerrar sesión
+                                </a>
+                            {% else %}
+                                <!-- CLIENTE -->
+                                <a href="{% url 'home' %}" 
+                                class="text-white hover:bg-pink-bright-dark px-3 py-2 rounded-md text-sm font-medium">
+                                    Home
+                                </a>
+                                <a href="{% url 'producto' %}" 
+                                class="text-white hover:bg-pink-bright-dark px-3 py-2 rounded-md text-sm font-medium">
+                                    Productos
+                                </a>
+                                <a href="{% url 'carrito' %}" 
+                                class="text-white hover:bg-pink-bright-dark px-3 py-2 rounded-md text-sm font-medium">
+                                    Carrito
+                                </a>
+                                <span class="text-white px-3 py-2 rounded-md text-sm font-medium">Hola, {{ request.session.usuario_nombre }}</span>
+                                <a href="{% url 'logout' %}" 
+                                class="bg-white text-pink-bright hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium shadow">
+                                    Cerrar sesión
+                                </a>
+                            {% endif %}
                         {% else %}
+                            <!-- VISITANTE -->
+                            <a href="{% url 'home' %}" 
+                            class="text-white hover:bg-pink-bright-dark px-3 py-2 rounded-md text-sm font-medium">
+                                Home
+                            </a>
+                            <a href="{% url 'producto' %}" 
+                            class="text-white hover:bg-pink-bright-dark px-3 py-2 rounded-md text-sm font-medium">
+                                Productos
+                            </a>
+                            <a href="{% url 'carrito' %}" 
+                            class="text-white hover:bg-pink-bright-dark px-3 py-2 rounded-md text-sm font-medium">
+                                Carrito
+                            </a>
                             <a href="{% url 'login' %}" 
-                            class="text-white hover:bg-pink-bright-dark hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out transform hover:scale-105">
+                            class="text-white hover:bg-pink-bright-dark px-3 py-2 rounded-md text-sm font-medium">
                                 Login
                             </a>
                             <a href="{% url 'registro' %}" 
-                            class="bg-white text-pink-bright hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out transform hover:scale-105 shadow">
+                            class="bg-white text-pink-bright hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium shadow">
                                 Registro
                             </a>
                         {% endif %}
-
-                        <a href="{% url 'carrito' %}" 
-                        class="text-white hover:bg-pink-bright-dark hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out transform hover:scale-105">
-                            Carrito
-                        </a>
                     </div>
                 </div>
                 
@@ -78,47 +107,39 @@
         <!-- Mobile menu -->
         <div class="md:hidden hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-pink-bright-dark">
-                <a href="{% url 'home' %}" 
-                class="text-white hover:bg-pink-bright block px-3 py-2 rounded-md text-base font-medium transition duration-300">
-                Home
-                </a>
-                <a href="{% url 'producto' %}" 
-                class="text-white hover:bg-pink-bright-dark hover:text-white px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out transform hover:scale-105">
-                    Productos
-                </a>
-
                 {% if request.session.usuario_id %}
-                    <span class="text-white block px-3 py-2 rounded-md text-base font-medium">Hola, {{ request.session.usuario_nombre }}</span>
-                    <a href="{% url 'logout' %}" 
-                    class="bg-white text-pink-bright block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out transform hover:scale-105 shadow">
-                        Cerrar sesión
-                    </a>
+                    {% if request.session.usuario_tipo == "admin" %}
+                        <!-- ADMIN -->
+                        <a href="{% url 'productos_list' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">Gestionar Productos</a>
+                        <a href="{% url 'sesiones_list' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">Gestionar Sesiones</a>
+                        <span class="text-white block px-3 py-2 rounded-md text-base font-medium">Hola, {{ request.session.usuario_nombre }}</span>
+                        <a href="{% url 'logout' %}" class="bg-white text-pink-bright block px-3 py-2 rounded-md text-base font-medium shadow">Cerrar sesión</a>
+                    {% else %}
+                        <!-- CLIENTE -->
+                        <a href="{% url 'home' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                        <a href="{% url 'producto' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">Productos</a>
+                        <a href="{% url 'carrito' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">Carrito</a>
+                        <span class="text-white block px-3 py-2 rounded-md text-base font-medium">Hola, {{ request.session.usuario_nombre }}</span>
+                        <a href="{% url 'logout' %}" class="bg-white text-pink-bright block px-3 py-2 rounded-md text-base font-medium shadow">Cerrar sesión</a>
+                    {% endif %}
                 {% else %}
-                    <a href="{% url 'login' %}" 
-                    class="text-white hover:bg-pink-bright-dark hover:text-white px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out transform hover:scale-105">
-                        Login
-                    </a>
-                    <a href="{% url 'registro' %}" 
-                    class="bg-white text-pink-bright block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out transform hover:scale-105 shadow">
-                        Registro
-                    </a>
+                    <!-- VISITANTE -->
+                    <a href="{% url 'home' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                    <a href="{% url 'producto' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">Productos</a>
+                    <a href="{% url 'carrito' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">Carrito</a>
+                    <a href="{% url 'login' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">Login</a>
+                    <a href="{% url 'registro' %}" class="bg-white text-pink-bright block px-3 py-2 rounded-md text-base font-medium shadow">Registro</a>
                 {% endif %}
-
-                <a href="{% url 'carrito' %}" 
-                        class="text-white hover:bg-pink-bright-dark hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300 ease-in-out transform hover:scale-105">
-                            Carrito
-                        </a>
             </div>
         </div>
     </nav>
 
     <!-- Main Content Area -->
     <main class="flex-grow">
-    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <!-- Aquí Django insertará el contenido -->
-        {% block content %}
-        {% endblock %}
-    </div>
+        <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+            {% block content %}
+            {% endblock %}
+        </div>
     </main>
 
     <!-- Footer -->
@@ -138,4 +159,7 @@
     </script>
 </body>
 </html>
+
+
+
 

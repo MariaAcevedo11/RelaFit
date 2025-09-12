@@ -52,6 +52,11 @@ class Usuario(models.Model):
     nombreCompletoUsuario = models.CharField()
     correoUsuario = models.CharField()
     contraseñaUsuario = models.CharField()
+    tipoUsuario = models.CharField(
+        max_length=10,
+        choices=[("cliente", "Cliente"), ("admin", "Administrador")],
+        default="cliente"
+    )
 
     def __str__(self):
         return self.nombreCompletoUsuario
@@ -70,7 +75,7 @@ class Producto(models.Model):
     nombreProducto = models.CharField(blank=True, null=True)
     tipoProducto = models.CharField()
     cantidadDeProducto = models.IntegerField()
-    precioDeProducto = models.IntegerField()
+    precioDeProducto = models.FloatField()
     imagenProducto = models.ImageField(upload_to="productos/", blank=True, null=True)
     marcaProducto = models.CharField()
     fechaVencimientoProducto = models.DateField()
