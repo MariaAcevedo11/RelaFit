@@ -1,25 +1,36 @@
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
-from .models import Sesion
-from .models import Usuario, Reseña
+from .models import Usuario, Reseña, Sesion, Producto
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Carrito, ItemCarrito, Producto
 from django.contrib.auth.decorators import login_required
-from .forms import ReseñaForm
+from .forms import ReseñaForm, ProductoForm, SesionForm
 from django.contrib import messages
 from django.db.models import Avg
+from .forms import ProductoForm, SesionForm
+from django.urls import reverse_lazy
+
+
 
 
 class HomePageView(TemplateView):
     template_name = "home.html"
 
+    def get(self, request, *args, **kwargs):
+        # Si el usuario es admin → lo redirigimos al listado de productos
+        if request.session.get("usuario_tipo") == "admin":
+            return redirect("productos_list")
+
+        # Si es cliente, mostramos el home normal
+        return super().get(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        # Filtros para el home de clientes
         sesiones = Sesion.objects.all()
 
-        # filtros
         categoria = self.request.GET.get("categoria")
         duracion = self.request.GET.get("duracion")
         hora = self.request.GET.get("hora")
@@ -35,13 +46,10 @@ class HomePageView(TemplateView):
         context["categorias"] = Sesion.objects.values_list("categoriaSesion", flat=True).distinct()
         context["duraciones"] = Sesion.objects.values_list("duracionSesion", flat=True).distinct()
         context["horas"] = Sesion.objects.values_list("horaSesion", flat=True).distinct()
-
-        # para mantener seleccionados
         context["categoria_seleccionada"] = categoria
         context["duracion_seleccionada"] = duracion
         context["hora_seleccionada"] = hora
 
-        
         return context
 
 
@@ -98,7 +106,14 @@ class LoginPageView(View):
 
             request.session['usuario_id'] = usuario.idUsuario
             request.session['usuario_nombre'] = usuario.nombreCompletoUsuario
-            return redirect("home")
+            request.session['usuario_tipo'] = usuario.tipoUsuario
+
+            print("Usuario:", usuario.nombreCompletoUsuario, "tipo:", usuario.tipoUsuario)
+
+            if usuario.tipoUsuario == "admin":
+                return redirect("productos_list")
+            else:
+                return redirect("home")
         except Usuario.DoesNotExist:
             return render(request, self.template_name, {"error": "Usuario o contraseña inválidos"})
     
@@ -206,3 +221,71 @@ class CarritoPageView(TemplateView):
         item = get_object_or_404(ItemCarrito, id=item_id, carrito__usuario=request.user)
         item.delete()
         return redirect("ver_carrito")
+    
+
+
+    
+
+class AdminRequiredMixin:
+    def dispatch(self, request, *args, **kwargs):
+        usuario_id = request.session.get("usuario_id")
+        if not usuario_id:
+            return redirect("login")  # 👈 tu login, no el de Django Admin
+        usuario = Usuario.objects.get(pk=usuario_id)
+        if usuario.tipoUsuario != "admin":
+            return redirect("home")
+        return super().dispatch(request, *args, **kwargs)
+    
+
+# CRUD de productos
+
+class ProductoListView(AdminRequiredMixin, ListView):
+    model = Producto
+    template_name = "productos_list.html"
+    context_object_name = "productos"
+
+class ProductoCreateView(AdminRequiredMixin, CreateView):
+    model = Producto
+    form_class = ProductoForm
+    template_name = "producto_form.html"
+    success_url = reverse_lazy("productos_list")
+
+
+class ProductoUpdateView(AdminRequiredMixin, UpdateView):
+    model = Producto
+    form_class = ProductoForm
+    template_name = "producto_form.html"
+    success_url = reverse_lazy("productos_list")
+
+
+class ProductoDeleteView(AdminRequiredMixin, DeleteView):
+    model = Producto
+    template_name = "producto_confirm_delete.html"
+    success_url = reverse_lazy("productos_list")
+
+
+# CRUD de sesiones
+
+class SesionListView(AdminRequiredMixin, ListView):
+    model = Sesion
+    template_name = "sesiones_list.html"
+    context_object_name = "sesiones"
+
+
+class SesionCreateView(AdminRequiredMixin, CreateView):
+    model = Sesion
+    form_class = SesionForm
+    template_name = "sesion_form.html"
+    success_url = reverse_lazy("sesiones_list")
+
+class SesionUpdateView(AdminRequiredMixin, UpdateView):
+    model = Sesion
+    form_class = SesionForm
+    template_name = "sesion_form.html"
+    success_url = reverse_lazy("sesiones_list")
+
+
+class SesionDeleteView(AdminRequiredMixin, DeleteView):
+    model = Sesion
+    template_name = "sesion_confirm_delete.html"
+    success_url = reverse_lazy("sesiones_list")
