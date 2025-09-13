@@ -7,15 +7,15 @@ from django.contrib.auth.models import User
 class Sesion(models.Model):
 
     idSesion = models.AutoField(primary_key= True)
-    nombreSesion = models.CharField()
-    categoriaSesion = models.CharField()
-    descripcionSesion = models.TextField()
-    imagenSesion = models.ImageField(upload_to="sesiones/", blank=True, null=True)
-    precioSesion = models.FloatField()
-    duracionSesion = models.IntegerField() #en minutos
-    horaSesion = models.CharField()
-    disponibleSesion = models.BooleanField()
-    reservaSesion = models.ForeignKey('Reserva', on_delete=models.CASCADE, related_name="sesion", null=True, blank=True)
+    nombreSesion = models.CharField(blank = False, null = False)
+    categoriaSesion = models.CharField(blank = False, null = False)
+    descripcionSesion = models.TextField(blank = False, null = False)
+    imagenSesion = models.ImageField(upload_to="sesiones/" , blank = False, null = False)
+    precioSesion = models.FloatField(blank = False, null = False)
+    duracionSesion = models.IntegerField(blank = False, null = False) #en minutos
+    horaSesion = models.CharField(blank = False, null = False)
+    disponibleSesion = models.BooleanField(blank = False, null = False)
+    reservaSesion = models.ForeignKey('Reserva', on_delete=models.CASCADE, related_name="sesion", blank = True, null = True)
  
     def __str__(self):
         return self.nombreSesion
@@ -26,8 +26,8 @@ class Reseña(models.Model):
     comentarioReseña = models.TextField()
     calificacionReseña = models.IntegerField()
     fechaReseña = models.DateField(auto_now_add=True)
-    reseñaSesion = models.ForeignKey('Sesion', on_delete=models.CASCADE, related_name='reseñas', null=True, blank=True)
-    reseñaUsuario = models.ForeignKey('Usuario', on_delete=models.CASCADE, related_name='reseñas', null=True, blank=True) # relacion uno a muchos con usuario
+    reseñaSesion = models.ForeignKey('Sesion', on_delete=models.CASCADE, related_name='reseñas')
+    reseñaUsuario = models.ForeignKey('Usuario', on_delete=models.CASCADE, related_name='reseñas') # relacion uno a muchos con usuario
 
     def __str__(self):
         return f"Reseña de {self.reseñaUsuario.nombreCompletoUsuario} - {self.reseñaSesion.nombreSesion}"
@@ -45,7 +45,7 @@ class Reserva(models.Model):
     fechaReserva = models.DateField(auto_now_add=True)
     horaReserva = models.TimeField(auto_now_add=True)
     precioFinalReserva = models.FloatField(default=0.0)  # 👈 inicializa en 0
-    numeroPersonasReserva = models.IntegerField(null=True, blank=True)
+    numeroPersonasReserva = models.IntegerField(blank = True, null = True)
     reservaCupon = models.OneToOneField(
         'Cupon', 
         on_delete=models.CASCADE, 
@@ -73,9 +73,9 @@ class Reserva(models.Model):
 class Usuario(models.Model):
     
     idUsuario = models.AutoField(primary_key = True)
-    nombreCompletoUsuario = models.CharField()
-    correoUsuario = models.CharField()
-    contraseñaUsuario = models.CharField()
+    nombreCompletoUsuario = models.CharField(blank = False, null = False)
+    correoUsuario = models.CharField(blank = False, null = False)
+    contraseñaUsuario = models.CharField(blank = False, null = False)
     tipoUsuario = models.CharField(
         max_length=10,
         choices=[("cliente", "Cliente"), ("admin", "Administrador")],
@@ -95,13 +95,13 @@ class Cupon(models.Model):
 
 class Producto(models.Model):
     idProducto = models.AutoField(primary_key=True)
-    nombreProducto = models.CharField(max_length=100)
-    tipoProducto = models.CharField(max_length=50)
-    marcaProducto = models.CharField(max_length=50)
-    cantidadDeProducto = models.IntegerField()
-    fechaVencimientoProducto = models.DateField(null=True, blank=True)
-    precioDeProducto = models.FloatField()
-    imagenProducto = models.ImageField(upload_to="productos/", null=True, blank=True)
+    nombreProducto = models.CharField(max_length=100, blank = False, null = False)
+    tipoProducto = models.CharField(max_length=50, blank = False, null = False)
+    marcaProducto = models.CharField(max_length=50, blank = False, null = False)
+    cantidadDeProducto = models.IntegerField(blank = False, null = False)
+    fechaVencimientoProducto = models.DateField(blank = False, null = False)
+    precioDeProducto = models.FloatField(blank = False, null = False)
+    imagenProducto = models.ImageField(upload_to="productos/", blank = False, null = False)
 
     def __str__(self):
         return self.nombreProducto
