@@ -302,9 +302,10 @@ class ProductoUpdateView(AdminRequiredMixin, UpdateView):
 
 class ProductoDeleteView(AdminRequiredMixin, DeleteView):
     model = Producto
-    template_name = "producto_confirm_delete.html"
     success_url = reverse_lazy("productos_list")
 
+    def get(self, request, *args, **kwargs):
+        return redirect("productos_list")
 
 # CRUD de sesiones
 
@@ -329,8 +330,10 @@ class SesionUpdateView(AdminRequiredMixin, UpdateView):
 
 class SesionDeleteView(AdminRequiredMixin, DeleteView):
     model = Sesion
-    template_name = "sesion_confirm_delete.html"
     success_url = reverse_lazy("sesiones_list")
+
+    def get(self, request, *args, **kwargs):
+        return redirect("sesiones_list")
 
 
 

@@ -2,7 +2,11 @@
 {% block content %}
 <h1 class="text-2xl font-bold mb-4">Gestión de Sesiones</h1>
 
-<a href="{% url 'admin_sesion_crear' %}" class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded shadow">➕ Nueva Sesión</a>
+
+<a href="{% url 'admin_sesion_crear' %}" 
+   class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded shadow">
+   ➕ Nueva Sesión
+</a>
 
 <table class="min-w-full mt-4 border">
   <thead>
@@ -22,17 +26,49 @@
       <td class="px-4 py-2">{{ sesion.categoriaSesion }}</td>
       <td class="px-4 py-2">{{ sesion.duracionSesion }} min</td>
       <td class="px-4 py-2">${{ sesion.precioSesion }}</td>
-      <td class="border px-4 py-2">{{ sesion.horaSesion}}</td>
+      <td class="px-4 py-2">{{ sesion.horaSesion }}</td>
       <td class="px-4 py-2 space-x-2">
+        <!-- Editar -->
         <a href="{% url 'admin_sesion_editar' sesion.idSesion %}" class="text-blue-500">✏️ Editar</a>
-        <a href="{% url 'admin_sesion_eliminar' sesion.idSesion %}" class="text-red-500">🗑 Eliminar</a>
+
+        <!-- Eliminar -->
+        <button onclick="openModal('{{ sesion.idSesion }}')" class="text-red-500">🗑 Eliminar</button>
+
+        <!-- Modal -->
+        <div id="modal-{{ sesion.idSesion }}" 
+             class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50">
+          <div class="bg-white rounded-lg shadow-lg p-6 w-96">
+            <h2 class="text-lg font-bold mb-4">Confirmar eliminación</h2>
+            <p class="mb-4">¿Seguro que deseas eliminar la sesión <strong>{{ sesion.nombreSesion }}</strong>?</p>
+            <div class="flex justify-end space-x-3">
+              <button onclick="closeModal('{{ sesion.idSesion }}')" 
+                      class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancelar</button>
+              <form method="post" action="{% url 'admin_sesion_eliminar' sesion.idSesion %}">
+                {% csrf_token %}
+                <button type="submit" 
+                        class="px-4 py-2 bg-pink-500 text-white rounded hover:bg-red-600">
+                        Eliminar
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
       </td>
     </tr>
     {% empty %}
     <tr>
-      <td colspan="5" class="text-center py-4">No hay sesiones registradas.</td>
+      <td colspan="6" class="text-center py-4">No hay sesiones registradas.</td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
+
+<script>
+function openModal(id) {
+    document.getElementById('modal-' + id).classList.remove('hidden');
+}
+function closeModal(id) {
+    document.getElementById('modal-' + id).classList.add('hidden');
+}
+</script>
 {% endblock %}
