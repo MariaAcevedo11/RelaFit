@@ -64,6 +64,11 @@ class Reserva(models.Model):
         blank=True, 
         related_name='reservas'
     )
+    estado = models.CharField(
+    max_length=20,
+    choices=[('activa', 'Activa'), ('enviada', 'Enviada')],
+    default='activa'
+)
 
     def __str__(self):
         return f"Reserva {self.idReserva} de {self.usuario.nombreCompletoUsuario}"

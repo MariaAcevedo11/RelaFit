@@ -15,22 +15,21 @@ class HomePageView(TemplateView):
     template_name = "home.html"
 
     def get(self, request, *args, **kwargs):
-        # Si el usuario es admin → lo redirigimos al listado de productos
+        # Redirigir admin
         if request.session.get("usuario_tipo") == "admin":
             return redirect("productos_list")
 
-        # Si es cliente, mostramos el home normal
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # Filtros para el home de clientes
+        # Filtros normales
         sesiones = Sesion.objects.all()
-
         categoria = self.request.GET.get("categoria")
         duracion = self.request.GET.get("duracion")
         hora = self.request.GET.get("hora")
+        mostrar_mejores = self.request.GET.get("mejores")  # <- nuevo parámetro
 
         if categoria:
             sesiones = sesiones.filter(categoriaSesion=categoria)
@@ -39,6 +38,11 @@ class HomePageView(TemplateView):
         if hora:
             sesiones = sesiones.filter(horaSesion=hora)
 
+        # Si el usuario pidió ver las mejores calificaciones
+        if mostrar_mejores:
+            sesiones = sesiones.annotate(promedio_reseña=Avg('reseñas__calificacionReseña'))\
+                               .order_by('-promedio_reseña')[:3]
+
         context["sesiones"] = sesiones
         context["categorias"] = Sesion.objects.values_list("categoriaSesion", flat=True).distinct()
         context["duraciones"] = Sesion.objects.values_list("duracionSesion", flat=True).distinct()
@@ -46,6 +50,7 @@ class HomePageView(TemplateView):
         context["categoria_seleccionada"] = categoria
         context["duracion_seleccionada"] = duracion
         context["hora_seleccionada"] = hora
+        context["mostrar_mejores"] = mostrar_mejores
 
         return context
 
@@ -152,7 +157,6 @@ class LogoutPageView(View):
 
 
 class ProductoPageView(TemplateView):
-    
     template_name = "producto.html"
 
     def get_context_data(self, **kwargs):
@@ -165,11 +169,12 @@ class ProductoPageView(TemplateView):
         tipo = self.request.GET.get("tipo")
         precio_min = self.request.GET.get("precio_min")
         precio_max = self.request.GET.get("precio_max")
+        nombre = self.request.GET.get("nombre")  # 👈 nuevo filtro
 
-        if marca and marca != "":  
+        if marca:  
             productos = productos.filter(marcaProducto__icontains=marca)
         
-        if tipo and tipo != "":  
+        if tipo:  
             productos = productos.filter(tipoProducto__icontains=tipo)
 
         if precio_min:  
@@ -178,24 +183,36 @@ class ProductoPageView(TemplateView):
         if precio_max:  
             productos = productos.filter(precioDeProducto__lte=precio_max)
 
+        if nombre:  # 👈 búsqueda por nombre
+            productos = productos.filter(nombreProducto__icontains=nombre)
+
         context["productos"] = productos
 
         # Para llenar los selects dinámicamente
         context["marcas"] = Producto.objects.values_list("marcaProducto", flat=True).distinct()
         context["tipos"] = Producto.objects.values_list("tipoProducto", flat=True).distinct()
+        context["nombre"] = nombre  # para mantener el valor en el input
 
         return context
+
 
 class ReservaPageView(TemplateView):
     template_name = "reserva.html"
 
     def post(self, request, *args, **kwargs):
+        
         usuario_id = request.session.get("usuario_id")
         if not usuario_id:
             return redirect("login")
+        usuario = get_object_or_404(Usuario, idUsuario=request.session["usuario_id"])
+        reserva = Reserva.objects.filter(usuario=usuario, estado='activa').first()
 
-        usuario = get_object_or_404(Usuario, idUsuario=usuario_id)
-        reserva, created = Reserva.objects.get_or_create(usuario=usuario, defaults={"precioFinalReserva": 0.0})
+        # Confirmar reserva
+        if 'confirmar' in request.POST:
+            reserva.estado = 'enviada'
+            reserva.save()
+            messages.success(request, "¡Reserva confirmada! Muchas gracias por tu preferencia.")
+            return redirect('home')
 
         # Eliminar producto
         eliminar_producto_id = request.POST.get("eliminar_producto_id")

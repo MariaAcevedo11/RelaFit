@@ -84,15 +84,26 @@
             </p>
         </div>
 
-        <!-- Botón confirmar -->
+       <!-- Botón confirmar -->
         <div class="mt-6 text-center">
-            <form method="post">
+            <form method="post" onsubmit="return confirmarReserva()">
                 {% csrf_token %}
-                <button type="submit" class="bg-pink-bright hover:bg-pink-bright-dark text-white px-6 py-3 rounded-xl shadow-md font-semibold transition">
+                <button type="submit" name = "confirmar" class="bg-pink-bright hover:bg-pink-bright-dark text-white px-6 py-3 rounded-xl shadow-md font-semibold transition">
                     Confirmar Reserva
                 </button>
             </form>
         </div>
+
+        <script>
+        function confirmarReserva() {
+            if (confirm("¿Estás seguro de que quieres confirmar la reserva?")) {
+                alert("¡Reserva confirmada! Muchas gracias por tu preferencia."); // <-- mensaje
+                return true; // envía el formulario
+            }
+            return false; // cancela el envío
+        }
+        </script>
+
 
     {% else %}
         <p class="text-gray-500 text-center italic">Tu carrito está vacío.</p>
