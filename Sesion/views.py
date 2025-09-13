@@ -1,14 +1,11 @@
 from django.views import View
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
-from django.http import HttpResponseRedirect
-from .models import Usuario, Reseña, Sesion, Producto
+from .models import Usuario, Reseña, Sesion, Producto, Reserva
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Carrito, ItemCarrito, Producto
-from django.contrib.auth.decorators import login_required
-from .forms import ReseñaForm, ProductoForm, SesionForm
+from .models import Producto
+from .forms import ProductoForm, SesionForm
 from django.contrib import messages
 from django.db.models import Avg
-from .forms import ProductoForm, SesionForm
 from django.urls import reverse_lazy
 
 
@@ -63,7 +60,7 @@ class SesionPageView(View):
 
         return render(request, "sesion.html", {
             "sesion": sesion,
-            "promedio": promedio,  # 👈 pasamos al template
+            "promedio": promedio,  
         })
 
     def post(self, request, sesion_id):
@@ -189,48 +186,76 @@ class ProductoPageView(TemplateView):
 
         return context
 
+class ReservaPageView(TemplateView):
+    template_name = "reserva.html"
+
+    def post(self, request, *args, **kwargs):
+        usuario_id = request.session.get("usuario_id")
+        if not usuario_id:
+            return redirect("login")
+
+        usuario = get_object_or_404(Usuario, idUsuario=usuario_id)
+        reserva, created = Reserva.objects.get_or_create(usuario=usuario, defaults={"precioFinalReserva": 0.0})
+
+        # Eliminar producto
+        eliminar_producto_id = request.POST.get("eliminar_producto_id")
+        if eliminar_producto_id:
+            producto = get_object_or_404(Producto, idProducto=eliminar_producto_id)
+            reserva.productos.remove(producto)
+            messages.error(request, f"{producto.nombreProducto} fue eliminado de tu reserva.")  # 🔴 mensaje rojo
+
+        # Eliminar sesión
+        eliminar_sesion_id = request.POST.get("eliminar_sesion_id")
+        if eliminar_sesion_id:
+            sesion = get_object_or_404(Sesion, idSesion=eliminar_sesion_id)
+            reserva.sesiones.remove(sesion)
+            messages.error(request, f"{sesion.nombreSesion} fue eliminada de tu reserva.")  # 🔴 mensaje rojo
+
+        # Agregar producto o sesión como antes...
+        producto_id = request.POST.get("producto_id")
+        if producto_id:
+            producto = get_object_or_404(Producto, idProducto=producto_id)
+            reserva.productos.add(producto)
+            messages.success(request, f"{producto.nombreProducto} agregado a tu reserva.")
+
+        sesion_id = request.POST.get("sesion_id")
+        if sesion_id:
+            sesion = get_object_or_404(Sesion, idSesion=sesion_id)
+            reserva.sesiones.add(sesion)
+            messages.success(request, f"{sesion.nombreSesion} agregada a tu reserva.")
+
+        # Recalcular total dinámicamente
+        total = sum([p.precioDeProducto for p in reserva.productos.all()]) + \
+                sum([s.precioSesion for s in reserva.sesiones.all()])
+        reserva.precioFinalReserva = total
+        reserva.save()
+
+        return redirect("reserva")
 
 
-## testing
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        usuario_id = self.request.session.get("usuario_id")
+        if usuario_id:
+            usuario = get_object_or_404(Usuario, idUsuario=usuario_id)
+            reserva = Reserva.objects.filter(usuario=usuario).first()
+            if reserva:
+                # Recalcular precioFinalReserva dinámicamente
+                total = sum([p.precioDeProducto for p in reserva.productos.all()]) + \
+                        sum([s.precioSesion for s in reserva.sesiones.all()])
+                reserva.precioFinalReserva = total
+                reserva.save()
+                context["reserva"] = reserva
+        return context
 
 
-class CarritoPageView(TemplateView):
 
-    template_name = "carrito.html" 
-    
-    
-    @login_required
-    def ver_carrito(request):
-        carrito, _ = Carrito.objects.get_or_create(usuario=request.user)
-        return render(request, "carrito.html", {"carrito": carrito})
-
-
-    @login_required
-    def agregar_al_carrito(request, producto_id):
-        carrito, _ = Carrito.objects.get_or_create(usuario=request.user)
-        producto = get_object_or_404(Producto, idProducto=producto_id)
-        item, creado = ItemCarrito.objects.get_or_create(carrito=carrito, producto=producto)
-        if not creado:
-            item.cantidad += 1
-            item.save()
-        return redirect("ver_carrito")
-
-
-    @login_required
-    def eliminar_del_carrito(request, item_id):
-        item = get_object_or_404(ItemCarrito, id=item_id, carrito__usuario=request.user)
-        item.delete()
-        return redirect("ver_carrito")
-    
-
-
-    
 
 class AdminRequiredMixin:
     def dispatch(self, request, *args, **kwargs):
         usuario_id = request.session.get("usuario_id")
         if not usuario_id:
-            return redirect("login")  # 👈 tu login, no el de Django Admin
+            return redirect("login")  
         usuario = Usuario.objects.get(pk=usuario_id)
         if usuario.tipoUsuario != "admin":
             return redirect("home")
@@ -289,3 +314,8 @@ class SesionDeleteView(AdminRequiredMixin, DeleteView):
     model = Sesion
     template_name = "sesion_confirm_delete.html"
     success_url = reverse_lazy("sesiones_list")
+
+
+
+
+    

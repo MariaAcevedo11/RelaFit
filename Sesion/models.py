@@ -15,7 +15,7 @@ class Sesion(models.Model):
     duracionSesion = models.IntegerField() #en minutos
     horaSesion = models.CharField()
     disponibleSesion = models.BooleanField()
-    reservaSesion = models.OneToOneField('Reserva', on_delete=models.CASCADE, related_name="sesion", null=True, blank=True)
+    reservaSesion = models.ForeignKey('Reserva', on_delete=models.CASCADE, related_name="sesion", null=True, blank=True)
  
     def __str__(self):
         return self.nombreSesion
@@ -35,28 +35,40 @@ class Reseña(models.Model):
 
 class Reserva(models.Model):
     idReserva = models.AutoField(primary_key=True)
-    usuario = models.ForeignKey('Usuario', on_delete=models.CASCADE, related_name='reservas', null = True, blank = True)
+    usuario = models.ForeignKey(
+        'Usuario', 
+        on_delete=models.CASCADE, 
+        related_name='reservas', 
+        null=True, 
+        blank=True
+    )
     fechaReserva = models.DateField(auto_now_add=True)
     horaReserva = models.TimeField(auto_now_add=True)
-    precioFinalReserva = models.FloatField()
+    precioFinalReserva = models.FloatField(default=0.0)  # 👈 inicializa en 0
     numeroPersonasReserva = models.IntegerField(null=True, blank=True)
-    reservaCupon = models.OneToOneField('Cupon', on_delete=models.CASCADE, null=True, blank=True)
+    reservaCupon = models.OneToOneField(
+        'Cupon', 
+        on_delete=models.CASCADE, 
+        null=True, 
+        blank=True
+    )
+
+    # 👇 aquí agregamos las relaciones ManyToMany
+    productos = models.ManyToManyField(
+        'Producto', 
+        blank=True, 
+        related_name='reservas'
+    )
+    sesiones = models.ManyToManyField(
+        'Sesion', 
+        blank=True, 
+        related_name='reservas'
+    )
 
     def __str__(self):
         return f"Reserva {self.idReserva} de {self.usuario.nombreCompletoUsuario}"
+
     
-
-class ItemReserva(models.Model):
-    reservaItem = models.ForeignKey(Reserva, related_name="items", on_delete=models.CASCADE)
-    productoItem = models.ForeignKey('Producto', on_delete=models.CASCADE, null=True, blank=True)
-    sesionItem = models.ForeignKey(Sesion, on_delete=models.CASCADE, null=True, blank=True)
-    cantidadItem = models.PositiveIntegerField(default=1)
-    precioUnitarioItem = models.FloatField()
-
-    def subtotal(self):
-        return self.precioUnitario * self.cantidad
-
-
 
 class Usuario(models.Model):
     
@@ -82,38 +94,16 @@ class Cupon(models.Model):
     fechaVencimientoCupon = models.DateField()
 
 class Producto(models.Model):
-
-    idProducto = models.AutoField(primary_key = True)
-    nombreProducto = models.CharField(blank=True, null=True)
-    tipoProducto = models.CharField()
+    idProducto = models.AutoField(primary_key=True)
+    nombreProducto = models.CharField(max_length=100)
+    tipoProducto = models.CharField(max_length=50)
+    marcaProducto = models.CharField(max_length=50)
     cantidadDeProducto = models.IntegerField()
+    fechaVencimientoProducto = models.DateField(null=True, blank=True)
     precioDeProducto = models.FloatField()
-    imagenProducto = models.ImageField(upload_to="productos/", blank=True, null=True)
-    marcaProducto = models.CharField()
-    fechaVencimientoProducto = models.DateField()
-    productoReserva = models.ForeignKey('Reserva', on_delete=models.CASCADE, related_name='productos', null=True, blank=True)
-
-class Carrito(models.Model):
-
-    usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE, related_name="carrito", null = True, blank = True)
+    imagenProducto = models.ImageField(upload_to="productos/", null=True, blank=True)
 
     def __str__(self):
-        return f"Carrito de {self.usuario.nombreCompletoUsuario}"
+        return self.nombreProducto
 
-    def total(self):
-        return sum(item.subtotal() for item in self.items.all())
-
-
-class ItemCarrito(models.Model):
-    carrito = models.ForeignKey(Carrito, related_name="items", on_delete=models.CASCADE)
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, null=True, blank=True)
-    sesion = models.ForeignKey(Sesion, on_delete=models.CASCADE, null=True, blank=True)
-    cantidad = models.PositiveIntegerField(default=1)
-
-    def subtotal(self):
-        if self.producto:
-            return self.producto.precioDeProducto * self.cantidad
-        if self.sesion:
-            return self.sesion.precioSesion * self.cantidad
-        return 0
 

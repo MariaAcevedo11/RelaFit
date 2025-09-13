@@ -106,10 +106,14 @@
 
                 <!-- Botón reservar -->
                 <div class="mt-6">
-                    <a href="/reserva/" 
-                       class="block bg-pink-bright hover:bg-pink-bright-dark text-white text-center py-4 rounded-xl shadow-md font-semibold transition duration-300 text-lg">
-                        Añadir al carrito 
-                    </a>
+                    <form method="post" action="{% url 'reserva' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="producto_id" value="{{ producto.idProducto }}">
+                        <button type="submit"
+                            class="block w-full bg-pink-bright hover:bg-pink-bright-dark text-white text-center py-4 rounded-xl shadow-md font-semibold transition duration-300 text-lg">
+                            Añadir a reserva
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto py-8">
+
+    <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Mi Reserva</h1>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="p-3 mb-4 rounded-lg 
+                        {% if message.tags == 'success' %} bg-green-100 text-green-700 border border-green-300 
+                        {% elif message.tags == 'error' %} bg-red-100 text-red-700 border border-red-300 
+                        {% else %} bg-gray-100 text-gray-700 border border-gray-300 {% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {% if reserva %}
+        <!-- Productos -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Productos</h2>
+            {% if reserva.productos.exists %}
+                <ul class="space-y-3">
+                    {% for p in reserva.productos.all %}
+                        <li class="flex justify-between items-center bg-white shadow p-4 rounded-xl">
+                            <div>
+                                <span class="font-medium">{{ p.nombreProducto }}</span> 
+                                <span class="text-gray-500">(x{{ p.cantidadDeProducto }})</span>
+                                <p class="text-gray-600 text-sm">Tipo: {{ p.tipoProducto }}, Marca: {{ p.marcaProducto }}</p>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <span class="font-semibold text-pink-bright">${{ p.precioDeProducto }}</span>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="eliminar_producto_id" value="{{ p.idProducto }}">
+                                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-sm">
+                                        Eliminar
+                                    </button>
+                                </form>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-gray-500 italic">No has agregado productos.</p>
+            {% endif %}
+        </div>
+
+        <!-- Sesiones -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Sesiones</h2>
+            {% if reserva.sesiones.exists %}
+                <ul class="space-y-3">
+                    {% for s in reserva.sesiones.all %}
+                        <li class="flex justify-between items-center bg-white shadow p-4 rounded-xl">
+                            <div>
+                                <span class="font-medium">{{ s.nombreSesion }}</span>
+                                <p class="text-gray-600 text-sm">Categoría: {{ s.categoriaSesion }}, Duración: {{ s.duracionSesion }} min, Hora: {{ s.horaSesion }}</p>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <span class="font-semibold text-pink-bright">${{ s.precioSesion }}</span>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="eliminar_sesion_id" value="{{ s.idSesion }}">
+                                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-sm">
+                                        Eliminar
+                                    </button>
+                                </form>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-gray-500 italic">No has agregado sesiones.</p>
+            {% endif %}
+        </div>
+
+        <!-- Total -->
+        <div class="text-right">
+            <p class="text-xl font-bold text-gray-800">
+                Total: <span class="text-pink-bright">${{ reserva.precioFinalReserva }}</span>
+            </p>
+        </div>
+
+        <!-- Botón confirmar -->
+        <div class="mt-6 text-center">
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="bg-pink-bright hover:bg-pink-bright-dark text-white px-6 py-3 rounded-xl shadow-md font-semibold transition">
+                    Confirmar Reserva
+                </button>
+            </form>
+        </div>
+
+    {% else %}
+        <p class="text-gray-500 text-center italic">Tu carrito está vacío.</p>
+    {% endif %}
+
+</div>
+{% endblock %}

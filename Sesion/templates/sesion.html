@@ -29,10 +29,16 @@
             </p>
 
             <!-- Botón reservar -->
-            <a href="/carrito/" 
-               class="mt-6 block bg-pink-bright hover:bg-pink-bright-dark text-white text-center py-3 rounded-xl shadow-md font-semibold transition">
-                Reservar
-            </a>
+            <div class="mt-6">
+                <form method="post" action="{% url 'reserva' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="sesion_id" value="{{ sesion.idSesion }}">
+                    <button type="submit"
+                        class="block w-full bg-pink-bright hover:bg-pink-bright-dark text-white text-center py-3 rounded-xl shadow-md font-semibold transition">
+                        Reservar
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 
