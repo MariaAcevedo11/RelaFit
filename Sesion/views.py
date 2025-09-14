@@ -60,13 +60,14 @@ class HomePageView(TemplateView):
 
 
 class SesionPageView(View):
+    
     def get(self, request, sesion_id):
         sesion = get_object_or_404(Sesion, idSesion=sesion_id)
 
         # Calcular promedio de las reseñas
         promedio = sesion.reseñas.aggregate(promedio=Avg('calificacionReseña'))['promedio']
 
-        return render(request, "sesion.html", {
+        return render(request, "sesion/sesion.html", {
             "sesion": sesion,
             "promedio": promedio,  
         })
@@ -83,7 +84,7 @@ class SesionPageView(View):
 
         if not calificacion or not comentario.strip():
             messages.error(request, "Debes ingresar calificación y comentario.")
-            return redirect("detalleSesion", sesion_id=sesion.idSesion)
+            return redirect("detalle_sesion", sesion_id=sesion.idSesion)
 
         Reseña.objects.create(
             reseñaSesion=sesion,
@@ -93,10 +94,10 @@ class SesionPageView(View):
         )
 
         messages.success(request, "¡Tu reseña fue publicada con éxito!")
-        return redirect("detalleSesion", sesion_id=sesion.idSesion)
+        return redirect("detalle_sesion", sesion_id=sesion.idSesion)
     
 class LoginPageView(View):
-    template_name = "login.html"
+    template_name = "usuario/login.html"
 
     def get(self, request):
         if request.session.get('usuario_id'):
@@ -123,7 +124,7 @@ class LoginPageView(View):
             return render(request, self.template_name, {"error": "Usuario o contraseña inválidos"})
     
 class RegistroPageView(TemplateView):
-    template_name = "registro.html"
+    template_name = "usuario/registro.html"
 
     def get(self, request):
         if request.session.get('usuario_id'):
@@ -160,7 +161,7 @@ class LogoutPageView(View):
 
 
 class ProductoPageView(TemplateView):
-    template_name = "producto.html"
+    template_name = "producto/producto.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -200,7 +201,7 @@ class ProductoPageView(TemplateView):
 
 
 class ReservaPageView(TemplateView):
-    template_name = "reserva.html"
+    template_name = "reserva/reserva.html"
 
     def post(self, request, *args, **kwargs):
         
@@ -321,20 +322,20 @@ class AdminRequiredMixin:
 
 class ProductoListView(AdminRequiredMixin, ListView):
     model = Producto
-    template_name = "productos_list.html"
+    template_name = "producto/productos_list.html"
     context_object_name = "productos"
 
 class ProductoCreateView(AdminRequiredMixin, CreateView):
     model = Producto
     form_class = ProductoForm
-    template_name = "producto_form.html"
+    template_name = "producto/producto_form.html"
     success_url = reverse_lazy("productos_list")
 
 
 class ProductoUpdateView(AdminRequiredMixin, UpdateView):
     model = Producto
     form_class = ProductoForm
-    template_name = "producto_form.html"
+    template_name = "producto/producto_form.html"
     success_url = reverse_lazy("productos_list")
 
 
@@ -349,20 +350,20 @@ class ProductoDeleteView(AdminRequiredMixin, DeleteView):
 
 class SesionListView(AdminRequiredMixin, ListView):
     model = Sesion
-    template_name = "sesiones_list.html"
+    template_name = "sesion/sesiones_list.html"
     context_object_name = "sesiones"
 
 
 class SesionCreateView(AdminRequiredMixin, CreateView):
     model = Sesion
     form_class = SesionForm
-    template_name = "sesion_form.html"
+    template_name = "sesion/sesion_form.html"
     success_url = reverse_lazy("sesiones_list")
 
 class SesionUpdateView(AdminRequiredMixin, UpdateView):
     model = Sesion
     form_class = SesionForm
-    template_name = "sesion_form.html"
+    template_name = "sesion/sesion_form.html"
     success_url = reverse_lazy("sesiones_list")
 
 
@@ -377,27 +378,27 @@ class SesionDeleteView(AdminRequiredMixin, DeleteView):
 
 class CuponListView(ListView):
     model = Cupon
-    template_name = "cupon_list.html"
+    template_name = "cupon/cupon_list.html"
     context_object_name = "cupones"
 
 
 class CuponCreateView(CreateView):
     model = Cupon
     form_class = CuponForm
-    template_name = "cupon_form.html"
+    template_name = "cupon/cupon_form.html"
     success_url = reverse_lazy("cupon_list")
 
 
 class CuponUpdateView(UpdateView):
     model = Cupon
     form_class = CuponForm
-    template_name = "cupon_form.html"
+    template_name = "cupon/cupon_form.html"
     success_url = reverse_lazy("cupon_list")
 
 
 class CuponDeleteView(DeleteView):
     model = Cupon
-    template_name = "cupon_list"
+    template_name = "cupon/cupon_list"
     success_url = reverse_lazy("cupon_list")
 
     
