@@ -77,6 +77,16 @@
             {% endif %}
         </div>
 
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="codigo_cupon" placeholder="Código de cupón">
+            <button type="submit">Aplicar</button>
+        </form>
+
+        {% if reserva.reservaCupon %}
+            <p>✅ Cupón aplicado: {{ reserva.reservaCupon.codigoCupon }} ({{ reserva.reservaCupon.descuentoCupon }}% de descuento)</p>
+        {% endif %}
+
         <!-- Total -->
         <div class="text-right">
             <p class="text-xl font-bold text-gray-800">

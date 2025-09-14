@@ -1,12 +1,13 @@
 from django.views import View
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
-from .models import Usuario, Reseña, Sesion, Producto, Reserva
+from .models import Usuario, Reseña, Sesion, Producto, Reserva, Cupon
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Producto
-from .forms import ProductoForm, SesionForm
+from .forms import ProductoForm, SesionForm, CuponForm
 from django.contrib import messages
 from django.db.models import Avg
 from django.urls import reverse_lazy
+from django.utils import timezone
 
 
 
@@ -247,13 +248,32 @@ class ReservaPageView(TemplateView):
             reserva.sesiones.add(sesion)
             messages.success(request, f"{sesion.nombreSesion} agregada a tu reserva.")
 
-        # Recalcular total dinámicamente
+        # Aplicar cupón
+        codigo_cupon = request.POST.get("codigo_cupon")
+        if codigo_cupon:
+            try:
+                cupon = Cupon.objects.get(codigoCupon=codigo_cupon, estadoCupon=True)
+                if cupon.fechaVencimientoCupon >= timezone.now().date():
+                    reserva.reservaCupon = cupon
+                    messages.success(request, f"Cupón {codigo_cupon} aplicado con éxito.")
+                else:
+                    messages.error(request, "El cupón está vencido.")
+            except Cupon.DoesNotExist:
+                messages.error(request, "Cupón inválido.")
+
+        # Recalcular total con cupón
         total = sum([p.precioDeProducto for p in reserva.productos.all()]) + \
                 sum([s.precioSesion for s in reserva.sesiones.all()])
-        reserva.precioFinalReserva = total
+
+        if reserva.reservaCupon:
+            descuento = reserva.reservaCupon.descuentoCupon
+            total = total - (total * descuento / 100)
+
+        reserva.precioFinalReserva = max(total, 0)  # nunca negativo
         reserva.save()
 
         return redirect("reserva")
+
 
 
     def get_context_data(self, **kwargs):
@@ -268,11 +288,6 @@ class ReservaPageView(TemplateView):
         )
 
             if reserva:
-                # Recalcular precioFinalReserva dinámicamente
-                total = sum([p.precioDeProducto for p in reserva.productos.all()]) + \
-                        sum([s.precioSesion for s in reserva.sesiones.all()])
-                reserva.precioFinalReserva = total
-                reserva.save()
                 context["reserva"] = reserva
         return context
 
@@ -346,7 +361,31 @@ class SesionDeleteView(AdminRequiredMixin, DeleteView):
     def get(self, request, *args, **kwargs):
         return redirect("sesiones_list")
 
+# CRUD CUPON
+
+class CuponListView(ListView):
+    model = Cupon
+    template_name = "cupon_list.html"
+    context_object_name = "cupones"
 
 
+class CuponCreateView(CreateView):
+    model = Cupon
+    form_class = CuponForm
+    template_name = "cupon_form.html"
+    success_url = reverse_lazy("cupon_list")
+
+
+class CuponUpdateView(UpdateView):
+    model = Cupon
+    form_class = CuponForm
+    template_name = "cupon_form.html"
+    success_url = reverse_lazy("cupon_list")
+
+
+class CuponDeleteView(DeleteView):
+    model = Cupon
+    template_name = "cupon_list"
+    success_url = reverse_lazy("cupon_list")
 
     

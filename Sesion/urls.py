@@ -1,6 +1,5 @@
 from django.urls import path 
-from .views import HomePageView, LoginPageView, RegistroPageView, ProductoPageView, LogoutPageView, SesionPageView, ProductoListView, ProductoCreateView, ProductoUpdateView, ProductoDeleteView, SesionListView, SesionCreateView, SesionUpdateView, SesionDeleteView, ReservaPageView
-
+from .views import HomePageView, LoginPageView, RegistroPageView, ProductoPageView, LogoutPageView, SesionPageView, ProductoListView, ProductoCreateView, ProductoUpdateView, ProductoDeleteView, SesionListView, SesionCreateView, SesionUpdateView, SesionDeleteView, ReservaPageView, CuponListView, CuponCreateView, CuponUpdateView, CuponDeleteView
 
 urlpatterns = [
     path("", HomePageView.as_view(), name = 'home'), 
@@ -18,6 +17,10 @@ urlpatterns = [
     path("panel/sesiones/crear/", SesionCreateView.as_view(), name="admin_sesion_crear"),
     path("panel/sesiones/<int:pk>/editar/", SesionUpdateView.as_view(), name="admin_sesion_editar"),
     path("panel/sesiones/<int:pk>/eliminar/", SesionDeleteView.as_view(), name="admin_sesion_eliminar"),
+    path("panel/cupones/", CuponListView.as_view(), name="cupon_list"),
+    path("panel/cupones/crear/", CuponCreateView.as_view(), name="cupon_form"),
+    path("panel/cupones/<int:pk>/editar/", CuponUpdateView.as_view(), name="cupon_form"),
+    path("panel/cupones/<int:pk>/eliminar/", CuponDeleteView.as_view(), name="cupon_delete"),
 
    
 

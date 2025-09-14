@@ -1,4 +1,4 @@
-from .models import Reseña, Producto, Sesion
+from .models import Reseña, Producto, Sesion, Cupon
 from django import forms
 
 
@@ -107,4 +107,31 @@ class SesionForm(forms.ModelForm):
                 "class": "w-full border border-pink-500 focus:border-pink-600 "
                          "focus:ring-2 focus:ring-pink-500 rounded px-4 py-2 shadow-sm"
             })
+        }
+
+class CuponForm(forms.ModelForm):
+    class Meta:
+        model = Cupon
+        fields = ["codigoCupon", "descuentoCupon", "estadoCupon", "fechaVencimientoCupon"]
+        widgets = {
+            "codigoCupon": forms.TextInput(attrs={
+                "class": "w-full border border-pink-500 focus:border-pink-600 "
+                         "focus:ring-2 focus:ring-pink-500 rounded px-4 py-2 shadow-sm"
+            }),
+            "descuentoCupon": forms.NumberInput(attrs={
+                "class": "w-full border border-pink-500 focus:border-pink-600 "
+                         "focus:ring-2 focus:ring-pink-500 rounded px-4 py-2 shadow-sm"
+            }),
+            "estadoCupon": forms.Select(choices=[
+                (True, "Activo"),
+                (False, "Inactivo"),
+            ], attrs={
+                "class": "w-full border border-pink-500 focus:border-pink-600 "
+                         "focus:ring-2 focus:ring-pink-500 rounded px-4 py-2 shadow-sm bg-white"
+            }),
+            "fechaVencimientoCupon": forms.DateInput(attrs={
+                "type": "date",
+                "class": "w-full border border-pink-500 focus:border-pink-600 "
+                         "focus:ring-2 focus:ring-pink-500 rounded px-4 py-2 shadow-sm"
+            }),
         }

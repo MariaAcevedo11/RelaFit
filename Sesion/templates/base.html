@@ -45,6 +45,10 @@
                                 class="text-white hover:bg-pink-bright-dark px-3 py-2 rounded-md text-sm font-medium">
                                     Gestionar Sesiones
                                 </a>
+                                <a href="{% url 'cupon_list' %}" 
+                                class="text-white hover:bg-pink-bright-dark px-3 py-2 rounded-md text-sm font-medium">
+                                    Gestionar Cupones
+                                </a>
                                 <span class="text-white px-3 py-2 rounded-md text-sm font-medium">Hola, {{ request.session.usuario_nombre }}</span>
                                 <a href="{% url 'logout' %}" 
                                 class="bg-white text-pink-bright hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium shadow">
