@@ -1,3 +1,5 @@
+#Autores: María Acevedo, Gabriela Sanabria, Jose Cardenas
+
 from django.views import View
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
 from .models import Usuario, Reseña, Sesion, Producto, Reserva, Cupon

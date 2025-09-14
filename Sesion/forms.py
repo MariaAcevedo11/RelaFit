@@ -1,3 +1,5 @@
+#Autores: María Acevedo, Gabriela Sanabria, Jose Cardenas
+
 from .models import Reseña, Producto, Sesion, Cupon
 from django import forms
 

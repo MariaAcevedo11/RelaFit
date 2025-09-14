@@ -1,3 +1,5 @@
+<!--Autores: María Acevedo -->
+
 {% extends "base.html" %}
 {% block content %}
 <div class="max-w-5xl mx-auto py-6 sm:px-6 lg:px-8">
@@ -57,7 +59,7 @@
             {% endfor %}
         {% endif %}
 
-        <form method="post" action="{% url 'detalleSesion' sesion.idSesion %}" class="space-y-3 mb-4"> 
+        <form method="post" action="{% url 'detalle_sesion' sesion.idSesion %}" class="space-y-3 mb-4"> 
             {% csrf_token %}
 
             <!-- Calificación -->

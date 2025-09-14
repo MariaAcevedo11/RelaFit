@@ -1,3 +1,5 @@
+<!--Autores: María Acevedo -->
+
 {% extends "base.html" %}
 
 {% block content %}
@@ -64,7 +66,7 @@
     <!-- Grid de sesiones -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {% for sesion in sesiones %}
-        <a href="{% url 'detalleSesion' sesion.idSesion %}"
+        <a href="{% url 'detalle_sesion' sesion.idSesion %}"
            class="bg-white rounded-2xl shadow-md p-5 block transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
 
             <!-- Imagen -->

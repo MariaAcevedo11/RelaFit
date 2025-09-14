@@ -1,3 +1,5 @@
+#Autores: María Acevedo, Gabriela Sanabria, Jose Cardenas
+
 from django.urls import path 
 from .views import HomePageView, LoginPageView, RegistroPageView, ProductoPageView, LogoutPageView, SesionPageView, ProductoListView, ProductoCreateView, ProductoUpdateView, ProductoDeleteView, SesionListView, SesionCreateView, SesionUpdateView, SesionDeleteView, ReservaPageView, CuponListView, CuponCreateView, CuponUpdateView, CuponDeleteView
 
@@ -8,7 +10,7 @@ urlpatterns = [
     path("producto/", ProductoPageView.as_view() , name = 'producto'),
     path('logout/', LogoutPageView.as_view(), name='logout'),
     path("reserva/", ReservaPageView.as_view(), name = 'reserva'),
-    path("sesion/<int:sesion_id>/", SesionPageView.as_view(), name="detalleSesion"),
+    path("sesion/<int:sesion_id>/", SesionPageView.as_view(), name="detalle_sesion"),
     path("panel/productos/", ProductoListView.as_view(), name="productos_list"),
     path("panel/productos/crear/", ProductoCreateView.as_view(), name="producto_form"),
     path("panel/productos/<int:pk>/editar/", ProductoUpdateView.as_view(), name="producto_form"),
@@ -20,8 +22,6 @@ urlpatterns = [
     path("panel/cupones/", CuponListView.as_view(), name="cupon_list"),
     path("panel/cupones/crear/", CuponCreateView.as_view(), name="cupon_form"),
     path("panel/cupones/<int:pk>/editar/", CuponUpdateView.as_view(), name="cupon_form"),
-    path("panel/cupones/<int:pk>/eliminar/", CuponDeleteView.as_view(), name="cupon_delete"),
-
-   
+    path("panel/cupones/<int:pk>/eliminar/", CuponDeleteView.as_view(), name="cupon_delete"),   
 
 ]
