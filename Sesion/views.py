@@ -253,13 +253,23 @@ class ReservaPageView(TemplateView):
         if codigo_cupon:
             try:
                 cupon = Cupon.objects.get(codigoCupon=codigo_cupon, estadoCupon=True)
-                if cupon.fechaVencimientoCupon >= timezone.now().date():
+
+                # Validar vencimiento
+                if cupon.fechaVencimientoCupon < timezone.now().date():
+                    messages.error(request, "El cupón está vencido.")
+
+                # Validar si ya fue usado en otra reserva
+                elif Reserva.objects.filter(reservaCupon=cupon).exists():
+                    messages.error(request, "El cupón ya fue usado en otra reserva.")
+
+                else:
                     reserva.reservaCupon = cupon
                     messages.success(request, f"Cupón {codigo_cupon} aplicado con éxito.")
-                else:
-                    messages.error(request, "El cupón está vencido.")
+
             except Cupon.DoesNotExist:
                 messages.error(request, "Cupón inválido.")
+
+
 
         # Recalcular total con cupón
         total = sum([p.precioDeProducto for p in reserva.productos.all()]) + \
