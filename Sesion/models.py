@@ -14,7 +14,6 @@ class Sesion(models.Model):
     precioSesion = models.FloatField(blank = False, null = False)
     duracionSesion = models.IntegerField(blank = False, null = False) #en minutos
     horaSesion = models.CharField(blank = False, null = False)
-    disponibleSesion = models.BooleanField(blank = False, null = False)
     reservaSesion = models.ForeignKey('Reserva', on_delete=models.CASCADE, related_name="sesion", blank = True, null = True)
  
     def __str__(self):

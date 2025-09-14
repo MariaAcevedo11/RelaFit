@@ -74,7 +74,7 @@ class SesionForm(forms.ModelForm):
         fields = [
             "nombreSesion", "categoriaSesion", "descripcionSesion",
             "imagenSesion", "precioSesion", "duracionSesion",
-            "horaSesion", "disponibleSesion"
+            "horaSesion"
         ]
         widgets = {
             "nombreSesion": forms.TextInput(attrs={
@@ -106,8 +106,5 @@ class SesionForm(forms.ModelForm):
                 "type": "time",
                 "class": "w-full border border-pink-500 focus:border-pink-600 "
                          "focus:ring-2 focus:ring-pink-500 rounded px-4 py-2 shadow-sm"
-            }),
-            "disponibleSesion": forms.CheckboxInput(attrs={
-                "class": "h-5 w-5 text-pink-500 border border-pink-500 rounded focus:ring-pink-500"
-            }),
+            })
         }

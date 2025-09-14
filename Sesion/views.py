@@ -205,7 +205,13 @@ class ReservaPageView(TemplateView):
         if not usuario_id:
             return redirect("login")
         usuario = get_object_or_404(Usuario, idUsuario=request.session["usuario_id"])
-        reserva = Reserva.objects.filter(usuario=usuario, estado='activa').first()
+        # Obtiene la reserva activa o la crea
+        reserva, created = Reserva.objects.get_or_create(
+            usuario=usuario,
+            estado="activa",
+            defaults={"precioFinalReserva": 0}
+        )
+
 
         # Confirmar reserva
         if 'confirmar' in request.POST:
@@ -255,7 +261,12 @@ class ReservaPageView(TemplateView):
         usuario_id = self.request.session.get("usuario_id")
         if usuario_id:
             usuario = get_object_or_404(Usuario, idUsuario=usuario_id)
-            reserva = Reserva.objects.filter(usuario=usuario).first()
+            reserva, created = Reserva.objects.get_or_create(
+            usuario=usuario,
+            estado="activa",
+            defaults={"precioFinalReserva": 0}
+        )
+
             if reserva:
                 # Recalcular precioFinalReserva dinámicamente
                 total = sum([p.precioDeProducto for p in reserva.productos.all()]) + \
