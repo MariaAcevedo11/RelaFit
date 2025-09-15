@@ -33,7 +33,7 @@ Before starting, make sure you have the following installed:
   Click the address bar in File Explorer and press `CTRL + C`.
 
 
-  ### 3. Open the Command Line
+### 3. Open the Command Line
 
 Open a terminal and navigate to the project folder:
 
