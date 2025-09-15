@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
  
 # Create your models here.
 
@@ -98,6 +99,10 @@ class Cupon(models.Model):
     codigoCupon = models.CharField()
     estadoCupon = models.BooleanField()
     fechaVencimientoCupon = models.DateField()
+
+    @property
+    def activo(self):
+        return self.estadoCupon and self.fechaVencimientoCupon >= timezone.now().date()
 
 class Producto(models.Model):
     idProducto = models.AutoField(primary_key=True)
