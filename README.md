@@ -2,7 +2,7 @@
 
 Greetings! 😊
 
-Follow these steps to run **NextDoorDeals** smoothly on **Windows** or **Linux**.
+Follow these steps to run **NextDoorDeals** smoothly on **Windows**.
 
 ---
 
