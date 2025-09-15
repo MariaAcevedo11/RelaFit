@@ -267,6 +267,9 @@ class ReservaPageView(TemplateView):
 
                 else:
                     reserva.reservaCupon = cupon
+                    cupon.estadoCupon = False
+                    cupon.save()
+
                     messages.success(request, f"Cupón {codigo_cupon} aplicado con éxito.")
 
             except Cupon.DoesNotExist:
