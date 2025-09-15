@@ -14,7 +14,7 @@ Before starting, make sure you have the following installed:
   Download from the official site:  
   [https://www.python.org/downloads/release/python-3131/](https://www.python.org/downloads/release/python-3131/)
 
-  ## 🚀 Installation Steps
+## 🚀 Installation Steps
 
 ### 1. Download the Project
 
