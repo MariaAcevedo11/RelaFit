@@ -2,7 +2,7 @@
 
 Greetings! 😊
 
-Follow these steps to run **NextDoorDeals** smoothly on **Windows**.
+Follow these steps to run **RelaFit** smoothly on **Windows**.
 
 ---
 
