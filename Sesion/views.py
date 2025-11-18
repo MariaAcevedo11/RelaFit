@@ -11,6 +11,12 @@ from django.db.models import Avg
 from django.urls import reverse_lazy
 from django.utils import timezone
 
+#para apis
+
+from django.http import JsonResponse
+import requests 
+
+
 
 
 
@@ -63,12 +69,14 @@ class SesionPageView(View):
     
     def get(self, request, sesion_id):
         sesion = get_object_or_404(Sesion, idSesion=sesion_id)
+        reseñas = sesion.reseñas.order_by('-fechaReseña')
 
         # Calcular promedio de las reseñas
         promedio = sesion.reseñas.aggregate(promedio=Avg('calificacionReseña'))['promedio']
 
         return render(request, "sesion/sesion.html", {
             "sesion": sesion,
+            "reseñas": reseñas,
             "promedio": promedio,  
         })
 
@@ -405,3 +413,54 @@ class CuponDeleteView(DeleteView):
     success_url = reverse_lazy("cupon_list")
 
     
+
+#Mandaremos una api de info de productos que tenemos 
+
+
+def apiProductos(request):
+    productos = Producto.objects.filter(cantidadDeProducto__gt=0)
+
+    data = {
+        "productos": [
+            {
+                "id": p.idProducto,
+                "nombre": p.nombreProducto,
+                "tipo": p.tipoProducto,
+                "marca": p.marcaProducto,
+                "cantidad": p.cantidadDeProducto,
+                "fechaVencimiento": p.fechaVencimientoProducto,
+                "precio": p.precioDeProducto,
+                "url": request.build_absolute_uri("/producto/"),
+            }
+            for p in productos
+        ]
+    }
+
+    return JsonResponse(data)
+
+
+
+#Consumiremos una api de youtube :) 
+
+#Para no subir la key lol casi la kgo
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
+
+def verVideo(request):
+    video_id = "Owj9PaLnB14"
+
+    url = "https://www.googleapis.com/youtube/v3/videos"
+    params = {
+        "part": "snippet",
+        "id": video_id,
+        "key": YOUTUBE_API_KEY
+    }
+
+    response = requests.get(url, params=params).json()
+    video = response["items"][0]
+
+    return render(request, "home.html", {"video": video, "video_id": video_id})

@@ -95,46 +95,43 @@
         <p class="text-gray-500 mt-4">Inicia sesión para dejar una reseña.</p>
     {% endif %}
 
-{% if promedio %}
-<div class="mb-6 p-3 bg-gray-50 border rounded-lg shadow-sm inline-block">
-    <p class="text-gray-700 font-medium">
-        Promedio de reseñas: <span class="text-pink-600">{{ promedio|floatformat:1 }}/5</span>
-    </p>
-</div>
-{% endif %}
+    {% if promedio %}
+    <div class="mb-6 p-3 bg-gray-50 border rounded-lg shadow-sm inline-block">
+        <p class="text-gray-700 font-medium">
+            Promedio de reseñas: <span class="text-pink-600">{{ promedio|floatformat:1 }}/5</span>
+        </p>
+    </div>
+    {% endif %}
 
+    <!-- Reseñas -->
+    <h3 class="text-xl font-semibold text-gray-800 mb-2">Reseñas</h3>
+    <div class="space-y-4 mb-6">
+        {% for reseña in reseñas %}
+            <div class="p-4 bg-white border rounded-xl shadow-sm">
+                
+                <!-- Estrellas -->
+                <div class="flex items-center mb-2">
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= reseña.calificacionReseña %}
+                            <span class="text-yellow-400 text-xl">★</span>
+                        {% else %}
+                            <span class="text-gray-300 text-xl">★</span>
+                        {% endif %}
+                    {% endfor %}
+                </div>
 
+                <!-- Comentario -->
+                <p class="text-gray-700 italic">“{{ reseña.comentarioReseña|default:"Sin comentario" }}”</p>
 
-<!-- Reseñas -->
-<h3 class="text-xl font-semibold text-gray-800 mb-2">Reseñas</h3>
-<div class="space-y-4 mb-6">
-    {% for reseña in sesion.reseñas.all %}
-        <div class="p-4 bg-white border rounded-xl shadow-sm">
-            
-            <!-- Estrellas -->
-            <div class="flex items-center mb-2">
-                {% for i in "12345" %}
-                    {% if forloop.counter <= reseña.calificacionReseña %}
-                        <span class="text-yellow-400 text-xl">★</span>
-                    {% else %}
-                        <span class="text-gray-300 text-xl">★</span>
-                    {% endif %}
-                {% endfor %}
+                <!-- Usuario y fecha -->
+                <p class="text-sm text-gray-500 mt-2">
+                    – <span class="font-medium">{{ reseña.reseñaUsuario.nombreCompletoUsuario }}</span> · {{ reseña.fechaReseña|date:"d/m/Y" }}
+                </p>
             </div>
-
-            <!-- Comentario -->
-            <p class="text-gray-700 italic">“{{ reseña.comentarioReseña|default:"Sin comentario" }}”</p>
-
-            <!-- Usuario y fecha -->
-            <p class="text-sm text-gray-500 mt-2">
-                – <span class="font-medium">{{ reseña.reseñaUsuario.nombreCompletoUsuario }}</span> · {{ reseña.fechaReseña|date:"d/m/Y" }}
-            </p>
-        </div>
-    {% empty %}
-        <p class="text-gray-500 italic">No hay reseñas para esta sesión.</p>
-    {% endfor %}
-</div>
-
+        {% empty %}
+            <p class="text-gray-500 italic">No hay reseñas para esta sesión.</p>
+        {% endfor %}
+    </div>
 
     <style>
     .rating input:checked ~ label,

@@ -93,5 +93,36 @@
         <p class="text-center text-gray-500 col-span-3">No hay sesiones registradas.</p>
         {% endfor %}
     </div>
+
+
+<!-- Sección del video integrado -->
+<div class="mt-16 bg-white shadow-xl rounded-3xl p-10 max-w-6xl mx-auto">
+    <h2 class="text-3xl font-extrabold text-pink-bright text-center mb-6">
+        ¡Prueba también el origami! Relajación garantizada
+    </h2>
+
+    <div class="flex justify-center">
+        <div class="w-full max-w-4xl">
+            <!-- Contenedor responsivo 16:9 -->
+            <div class="relative w-full" style="padding-bottom: 56.25%;">
+                <iframe 
+                    class="absolute inset-0 w-full h-full rounded-2xl shadow-xl"
+                    src="https://www.youtube.com/embed/{{ video_id }}"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+
+</div>
+
 </div>
 {% endblock %}

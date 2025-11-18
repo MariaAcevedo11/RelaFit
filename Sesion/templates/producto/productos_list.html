@@ -29,10 +29,10 @@
       <td class="px-4 py-2">${{ producto.precioDeProducto }}</td>
       <td class="px-4 py-2 space-x-2">
         <!-- Editar -->
-        <a href="{% url 'producto_form' producto.idProducto %}" class="text-blue-500">✏️ Editar</a>
+        <a href="{% url 'producto_form' producto.idProducto %}" class="text-blue-500">Editar</a>
 
         <!-- Eliminar: abre modal -->
-        <button onclick="openModal('{{ producto.idProducto }}')" class="text-red-500">🗑 Eliminar</button>
+        <button onclick="openModal('{{ producto.idProducto }}')" class="text-red-500">Eliminar</button>
 
         <!-- Modal -->
         <div id="modal-{{ producto.idProducto }}" 

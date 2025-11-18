@@ -1,2 +1,4 @@
 Pillow
 django-widget-tweaks
+requests
+python-dotenv
