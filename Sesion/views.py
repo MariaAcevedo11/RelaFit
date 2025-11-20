@@ -14,8 +14,16 @@ from django.utils import timezone
 #para apis
 
 from django.http import JsonResponse
-import requests 
+import requests
+from django.conf import settings
+from .services.youtube_api_service import YouTubeAPIService
+from .services.local_video_service import LocalVideoService
 
+
+def get_video_service():
+    if getattr(settings, "VIDEO_SERVICE", "youtube") == "local":
+        return LocalVideoService()
+    return YouTubeAPIService()
 
 
 
@@ -453,14 +461,15 @@ YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
 def verVideo(request):
     video_id = "Owj9PaLnB14"
 
-    url = "https://www.googleapis.com/youtube/v3/videos"
-    params = {
-        "part": "snippet",
-        "id": video_id,
-        "key": YOUTUBE_API_KEY
-    }
+    service = get_video_service()
+    video = service.get_video_data(video_id)
 
-    response = requests.get(url, params=params).json()
-    video = response["items"][0]
+    print(">>> API DE YOUTUBE CONSUMIDA CORRECTAMENTE")
+    print(f">>> VIDEO ID UTILIZADO: {video_id}")
+    print(f">>> RESPUESTA RECIBIDA: {video}")
 
-    return render(request, "home.html", {"video": video, "video_id": video_id})
+    return render(request, "home.html", {
+        "video": video,
+        "video_id": video_id,
+    })
+
