@@ -3,6 +3,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.utils.translation import gettext as _
  
 # Create your models here.
 
@@ -32,7 +33,7 @@ class Reseña(models.Model):
     reseñaUsuario = models.ForeignKey('Usuario', on_delete=models.CASCADE, related_name='reseñas') # relacion uno a muchos con usuario
 
     def __str__(self):
-        return f"Reseña de {self.reseñaUsuario.nombreCompletoUsuario} - {self.reseñaSesion.nombreSesion}"
+        return _(f"Reseña de {self.reseñaUsuario.nombreCompletoUsuario} - {self.reseñaSesion.nombreSesion}")
     
 
 class Reserva(models.Model):
@@ -68,12 +69,12 @@ class Reserva(models.Model):
     )
     estado = models.CharField(
     max_length=20,
-    choices=[('activa', 'Activa'), ('enviada', 'Enviada')],
+    choices=[('activa', _("Activa")), ('enviada', _("Enviada"))],
     default='activa'
 )
 
     def __str__(self):
-        return f"Reserva {self.idReserva} de {self.usuario.nombreCompletoUsuario}"
+        return _(f"Reserva {self.idReserva} de {self.usuario.nombreCompletoUsuario}")
 
     
 
@@ -85,7 +86,7 @@ class Usuario(models.Model):
     contraseñaUsuario = models.CharField(blank = False, null = False)
     tipoUsuario = models.CharField(
         max_length=10,
-        choices=[("cliente", "Cliente"), ("admin", "Administrador")],
+        choices=[("cliente", _("Cliente")), ("admin", _("Administrador"))],
         default="cliente"
     )
 

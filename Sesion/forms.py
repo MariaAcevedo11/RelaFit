@@ -2,6 +2,7 @@
 
 from .models import Reseña, Producto, Sesion, Cupon
 from django import forms
+from django.utils.translation import gettext as _
 
 
 class ReseñaForm(forms.ModelForm):
@@ -23,9 +24,9 @@ class ReseñaForm(forms.ModelForm):
         comentario = cleaned_data.get("comentarioReseña")
 
         if not calificacion:
-            raise forms.ValidationError("Debes dar una calificación con estrellas.")
+            raise forms.ValidationError(_("Debes dar una calificación con estrellas."))
         if not comentario:
-            raise forms.ValidationError("Debes escribir un comentario.")
+            raise forms.ValidationError(_("Debes escribir un comentario."))
 
         return cleaned_data
     
@@ -125,8 +126,8 @@ class CuponForm(forms.ModelForm):
                          "focus:ring-2 focus:ring-pink-500 rounded px-4 py-2 shadow-sm"
             }),
             "estadoCupon": forms.Select(choices=[
-                (True, "Activo"),
-                (False, "Inactivo"),
+                (True, _("Activo")),
+                (False, _("Inactivo")),
             ], attrs={
                 "class": "w-full border border-pink-500 focus:border-pink-600 "
                          "focus:ring-2 focus:ring-pink-500 rounded px-4 py-2 shadow-sm bg-white"

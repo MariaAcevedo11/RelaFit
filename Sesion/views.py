@@ -10,6 +10,7 @@ from django.contrib import messages
 from django.db.models import Avg
 from django.urls import reverse_lazy
 from django.utils import timezone
+from django.utils.translation import gettext as _
 
 #para apis
 
@@ -99,7 +100,7 @@ class SesionPageView(View):
         comentario = request.POST.get("comentarioReseña")
 
         if not calificacion or not comentario.strip():
-            messages.error(request, "Debes ingresar calificación y comentario.")
+            messages.error(request, _("Debes ingresar calificación y comentario."))
             return redirect("detalle_sesion", sesion_id=sesion.idSesion)
 
         Reseña.objects.create(
@@ -109,7 +110,7 @@ class SesionPageView(View):
             comentarioReseña=comentario,
         )
 
-        messages.success(request, "¡Tu reseña fue publicada con éxito!")
+        messages.success(request, _("Tu reseña fue publicada con éxito!"))
         return redirect("detalle_sesion", sesion_id=sesion.idSesion)
     
 class LoginPageView(View):
@@ -137,7 +138,7 @@ class LoginPageView(View):
             else:
                 return redirect("home")
         except Usuario.DoesNotExist:
-            return render(request, self.template_name, {"error": "Usuario o contraseña inválidos"})
+            return render(request, self.template_name, {"error": _("Usuario o contraseña inválidos")})
     
 class RegistroPageView(TemplateView):
     template_name = "usuario/registro.html"
@@ -154,9 +155,9 @@ class RegistroPageView(TemplateView):
         contraseña2 = request.POST.get("password2")
 
         if contraseña != contraseña2:
-            return render(request, self.template_name, {"error": "Las contraseñas no coinciden"})
+            return render(request, self.template_name, {"error": _("Las contraseñas no coinciden")})
         if Usuario.objects.filter(correoUsuario=correo).exists():
-            return render(request, self.template_name, {"error": "El correo ya está registrado"})
+            return render(request, self.template_name, {"error": _("El correo ya está registrado")})
 
         nuevo_usuario = Usuario.objects.create(
             idUsuario=Usuario.objects.count() + 1,  
@@ -237,7 +238,7 @@ class ReservaPageView(TemplateView):
         if 'confirmar' in request.POST:
             reserva.estado = 'enviada'
             reserva.save()
-            messages.success(request, "¡Reserva confirmada! Muchas gracias por tu preferencia.")
+            messages.success(request, _("Reserva confirmada! Muchas gracias por tu preferencia."))
             return redirect('home')
 
         # Eliminar producto
@@ -245,27 +246,27 @@ class ReservaPageView(TemplateView):
         if eliminar_producto_id:
             producto = get_object_or_404(Producto, idProducto=eliminar_producto_id)
             reserva.productos.remove(producto)
-            messages.error(request, f"{producto.nombreProducto} fue eliminado de tu reserva.")  # 🔴 mensaje rojo
+            messages.error(request, _(f"{producto.nombreProducto} fue eliminado de tu reserva."))
 
         # Eliminar sesión
         eliminar_sesion_id = request.POST.get("eliminar_sesion_id")
         if eliminar_sesion_id:
             sesion = get_object_or_404(Sesion, idSesion=eliminar_sesion_id)
             reserva.sesiones.remove(sesion)
-            messages.error(request, f"{sesion.nombreSesion} fue eliminada de tu reserva.")  # 🔴 mensaje rojo
+            messages.error(request, _(f"{sesion.nombreSesion} fue eliminada de tu reserva."))
 
         # Agregar producto o sesión como antes...
         producto_id = request.POST.get("producto_id")
         if producto_id:
             producto = get_object_or_404(Producto, idProducto=producto_id)
             reserva.productos.add(producto)
-            messages.success(request, f"{producto.nombreProducto} agregado a tu reserva.")
+            messages.success(request, _(f"{producto.nombreProducto} agregado a tu reserva."))
 
         sesion_id = request.POST.get("sesion_id")
         if sesion_id:
             sesion = get_object_or_404(Sesion, idSesion=sesion_id)
             reserva.sesiones.add(sesion)
-            messages.success(request, f"{sesion.nombreSesion} agregada a tu reserva.")
+            messages.success(request, _(f"{sesion.nombreSesion} agregada a tu reserva."))
 
         # Aplicar cupón
         codigo_cupon = request.POST.get("codigo_cupon")
@@ -275,21 +276,21 @@ class ReservaPageView(TemplateView):
 
                 # Validar vencimiento
                 if cupon.fechaVencimientoCupon < timezone.now().date():
-                    messages.error(request, "El cupón está vencido.")
+                    messages.error(request, _("El cupón está vencido."))
 
                 # Validar si ya fue usado en otra reserva
                 elif Reserva.objects.filter(reservaCupon=cupon).exists():
-                    messages.error(request, "El cupón ya fue usado en otra reserva.")
+                    messages.error(request, _("El cupón ya fue usado en otra reserva."))
 
                 else:
                     reserva.reservaCupon = cupon
                     cupon.estadoCupon = False
                     cupon.save()
 
-                    messages.success(request, f"Cupón {codigo_cupon} aplicado con éxito.")
+                    messages.success(request, _(f"Cupón {codigo_cupon} aplicado con éxito."))
 
             except Cupon.DoesNotExist:
-                messages.error(request, "Cupón inválido.")
+                messages.error(request, _("Cupón inválido."))
 
 
 

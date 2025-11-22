@@ -22,6 +22,8 @@
 </head>
 <body class="min-h-screen bg-gray-50 flex flex-col">
 
+{% load i18n %}
+
 
 
     <!-- Navbar -->
@@ -41,20 +43,20 @@
                                 <!-- ADMIN -->
                                 <a href="{% url 'productos_list' %}" 
                                 class="text-white hover:bg-pink-bright-dark px-3 py-2 rounded-md text-sm font-medium">
-                                    Gestionar Productos
+                                    {% trans "Gestionar Productos" %}
                                 </a>
                                 <a href="{% url 'sesiones_list' %}" 
                                 class="text-white hover:bg-pink-bright-dark px-3 py-2 rounded-md text-sm font-medium">
-                                    Gestionar Sesiones
+                                    {% trans "Gestionar Sesiones" %}
                                 </a>
                                 <a href="{% url 'cupon_list' %}" 
                                 class="text-white hover:bg-pink-bright-dark px-3 py-2 rounded-md text-sm font-medium">
-                                    Gestionar Cupones
+                                    {% trans "Gestionar Cupones" %}
                                 </a>
-                                <span class="text-white px-3 py-2 rounded-md text-sm font-medium">Hola, {{ request.session.usuario_nombre }}</span>
+                                <span class="text-white px-3 py-2 rounded-md text-sm font-medium">{% trans "Hola," %} {{ request.session.usuario_nombre }}</span>
                                 <a href="{% url 'logout' %}" 
                                 class="bg-white text-pink-bright hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium shadow">
-                                    Cerrar sesión
+                                    {% trans "Cerrar sesión" %}
                                 </a>
                             {% else %}
                                 <!-- CLIENTE -->
@@ -64,16 +66,16 @@
                                 </a>
                                 <a href="{% url 'producto' %}" 
                                 class="text-white hover:bg-pink-bright-dark px-3 py-2 rounded-md text-sm font-medium">
-                                    Productos
+                                    {% trans "Productos" %}
                                 </a>
                                 <a href="{% url 'reserva' %}" 
                                 class="text-white hover:bg-pink-bright-dark px-3 py-2 rounded-md text-sm font-medium">
-                                    Reserva
+                                    {% trans "Reserva" %}
                                 </a>
-                                <span class="text-white px-3 py-2 rounded-md text-sm font-medium">Hola, {{ request.session.usuario_nombre }}</span>
+                                <span class="text-white px-3 py-2 rounded-md text-sm font-medium">{% trans "Hola," %} {{ request.session.usuario_nombre }}</span>
                                 <a href="{% url 'logout' %}" 
                                 class="bg-white text-pink-bright hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium shadow">
-                                    Cerrar sesión
+                                    {% trans "Cerrar sesión" %}
                                 </a>
                             {% endif %}
                         {% else %}
@@ -84,19 +86,19 @@
                             </a>
                             <a href="{% url 'producto' %}" 
                             class="text-white hover:bg-pink-bright-dark px-3 py-2 rounded-md text-sm font-medium">
-                                Productos
+                                {% trans "Productos" %}
                             </a>
                             <a href="{% url 'reserva' %}" 
                             class="text-white hover:bg-pink-bright-dark px-3 py-2 rounded-md text-sm font-medium">
-                                Reserva
+                                {% trans "Reserva" %}
                             </a>
                             <a href="{% url 'login' %}" 
                             class="text-white hover:bg-pink-bright-dark px-3 py-2 rounded-md text-sm font-medium">
-                                Login
+                                {% trans "Login" %}
                             </a>
                             <a href="{% url 'registro' %}" 
                             class="bg-white text-pink-bright hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium shadow">
-                                Registro
+                                {% trans "Registro" %}
                             </a>
                         {% endif %}
                     </div>
@@ -119,25 +121,25 @@
                 {% if request.session.usuario_id %}
                     {% if request.session.usuario_tipo == "admin" %}
                         <!-- ADMIN -->
-                        <a href="{% url 'productos_list' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">Gestionar Productos</a>
-                        <a href="{% url 'sesiones_list' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">Gestionar Sesiones</a>
-                        <span class="text-white block px-3 py-2 rounded-md text-base font-medium">Hola, {{ request.session.usuario_nombre }}</span>
-                        <a href="{% url 'logout' %}" class="bg-white text-pink-bright block px-3 py-2 rounded-md text-base font-medium shadow">Cerrar sesión</a>
+                        <a href="{% url 'productos_list' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">{% trans "Gestionar Productos" %}</a>
+                        <a href="{% url 'sesiones_list' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">{% trans "Gestionar Sesiones" %}</a>
+                        <span class="text-white block px-3 py-2 rounded-md text-base font-medium">{% trans "Hola," %} {{ request.session.usuario_nombre }}</span>
+                        <a href="{% url 'logout' %}" class="bg-white text-pink-bright block px-3 py-2 rounded-md text-base font-medium shadow">{% trans "Cerrar sesión" %}</a>
                     {% else %}
                         <!-- CLIENTE -->
                         <a href="{% url 'home' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
-                        <a href="{% url 'producto' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">Productos</a>
-                        <a href="{% url 'reserva' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">Reserva</a>
-                        <span class="text-white block px-3 py-2 rounded-md text-base font-medium">Hola, {{ request.session.usuario_nombre }}</span>
-                        <a href="{% url 'logout' %}" class="bg-white text-pink-bright block px-3 py-2 rounded-md text-base font-medium shadow">Cerrar sesión</a>
+                        <a href="{% url 'producto' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">{% trans "Productos" %}</a>
+                        <a href="{% url 'reserva' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">{% trans "Reserva" %}</a>
+                        <span class="text-white block px-3 py-2 rounded-md text-base font-medium">{% trans "Hola," %} {{ request.session.usuario_nombre }}</span>
+                        <a href="{% url 'logout' %}" class="bg-white text-pink-bright block px-3 py-2 rounded-md text-base font-medium shadow">{% trans "Cerrar sesión" %}</a>
                     {% endif %}
                 {% else %}
                     <!-- VISITANTE -->
                     <a href="{% url 'home' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
-                    <a href="{% url 'producto' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">Productos</a>
-                    <a href="{% url 'reserva' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">Reserva</a>
-                    <a href="{% url 'login' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">Login</a>
-                    <a href="{% url 'registro' %}" class="bg-white text-pink-bright block px-3 py-2 rounded-md text-base font-medium shadow">Registro</a>
+                    <a href="{% url 'producto' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">{% trans "Productos" %}</a>
+                    <a href="{% url 'reserva' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">{% trans "Reserva" %}</a>
+                    <a href="{% url 'login' %}" class="text-white block px-3 py-2 rounded-md text-base font-medium">{% trans "Login" %}</a>
+                    <a href="{% url 'registro' %}" class="bg-white text-pink-bright block px-3 py-2 rounded-md text-base font-medium shadow">{% trans "Registro" %}</a>
                 {% endif %}
             </div>
         </div>
@@ -155,7 +157,7 @@
     <footer class="bg-pink-bright">
         <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
             <div class="text-center">
-                <p class="text-white font-medium">RelaFit - 2025 ©</p>
+                <p class="text-white font-medium">{% trans "RelaFit" %} - 2025 ©</p>
             </div>
         </div>
     </footer>

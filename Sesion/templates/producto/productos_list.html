@@ -1,23 +1,24 @@
 <!--Autores: Jose Cardenas  -->
 {% extends "base.html" %}
+{% load i18n %}
 {% block content %}
-<h1 class="text-2xl font-bold mb-4">Gestión de Productos</h1>
+<h1 class="text-2xl font-bold mb-4">{% trans "Gestión de Productos" %}</h1>
 
 
 
 <a href="{% url 'producto_form' %}" 
    class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded shadow">
-   ➕ Nuevo Producto
+   ➕ {% trans "Nuevo Producto" %}
 </a>
 
 <table class="min-w-full mt-4 border">
   <thead>
     <tr class="bg-gray-200">
-      <th class="px-4 py-2">Nombre</th>
-      <th class="px-4 py-2">Tipo</th>
-      <th class="px-4 py-2">Cantidad</th>
-      <th class="px-4 py-2">Precio</th>
-      <th class="px-4 py-2">Acciones</th>
+      <th class="px-4 py-2">{% trans "Nombre" %}</th>
+      <th class="px-4 py-2">{% trans "Tipo" %}</th>
+      <th class="px-4 py-2">{% trans "Cantidad" %}</th>
+      <th class="px-4 py-2">{% trans "Precio" %}</th>
+      <th class="px-4 py-2">{% trans "Acciones" %}</th>
     </tr>
   </thead>
   <tbody>
@@ -29,25 +30,25 @@
       <td class="px-4 py-2">${{ producto.precioDeProducto }}</td>
       <td class="px-4 py-2 space-x-2">
         <!-- Editar -->
-        <a href="{% url 'producto_form' producto.idProducto %}" class="text-blue-500">Editar</a>
+        <a href="{% url 'producto_form' producto.idProducto %}" class="text-blue-500">{% trans "Editar" %}</a>
 
         <!-- Eliminar: abre modal -->
-        <button onclick="openModal('{{ producto.idProducto }}')" class="text-red-500">Eliminar</button>
+        <button onclick="openModal('{{ producto.idProducto }}')" class="text-red-500">{% trans "Eliminar" %}</button>
 
         <!-- Modal -->
         <div id="modal-{{ producto.idProducto }}" 
              class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50">
           <div class="bg-white rounded-lg shadow-lg p-6 w-96">
-            <h2 class="text-lg font-bold mb-4">Confirmar eliminación</h2>
-            <p class="mb-4">¿Estás seguro de que deseas eliminar <strong>{{ producto.nombreProducto }}</strong>?</p>
+            <h2 class="text-lg font-bold mb-4">{% trans "Confirmar eliminación" %}</h2>
+            <p class="mb-4">{% blocktrans %}¿Estás seguro de que deseas eliminar <strong>{{ nombre }}</strong>?{% endblocktrans %}</p>
             <div class="flex justify-end space-x-3">
               <button onclick="closeModal('{{ producto.idProducto }}')" 
-                      class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancelar</button>
+                      class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">{% trans "Cancelar" %}</button>
               <form method="post" action="{% url 'producto_confirm_delete' producto.idProducto %}">
                 {% csrf_token %}
                 <button type="submit" 
                         class="px-4 py-2 bg-pink-500 text-white rounded hover:bg-red-600">
-                        Eliminar
+                        {% trans "Eliminar" %}
                 </button>
               </form>
             </div>
@@ -57,7 +58,7 @@
     </tr>
     {% empty %}
     <tr>
-      <td colspan="5" class="text-center py-4">No hay productos registrados.</td>
+      <td colspan="5" class="text-center py-4">{% trans "No hay productos registrados." %}</td>
     </tr>
     {% endfor %}
   </tbody>

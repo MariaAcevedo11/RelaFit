@@ -1,10 +1,10 @@
 <!--Autores: Gabriela Sanabria -->
 {% extends "base.html" %}
-
+{% load i18n %}
 {% block content %}
 <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Productos Disponibles</h2>
-    <h3 class="text-lg font-light text-gray-700 mb-6 text-center">Conoce y adquiere nuestros productos</h3>
+    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">{% trans "Productos Disponibles" %}</h2>
+    <h3 class="text-lg font-light text-gray-700 mb-6 text-center">{% trans "Conoce y adquiere nuestros productos" %}</h3>
 
     <!-- 🔍 Filtros -->
 <form method="get" class="flex flex-wrap items-center gap-4 mb-4">
@@ -14,10 +14,10 @@
 
         <button type="submit" 
                 class="px-4 py-1 bg-pink-bright text-white rounded-md shadow-md hover:bg-pink-600">
-            Buscar
+            {% trans "Buscar" %}
         </button>
         <input type="text" name="nombre" value="{{ nombre|default:'' }}" 
-               placeholder="Buscar por nombre..."
+               placeholder="{% trans 'Buscar por nombre...' %}"
                class="px-3 py-1 rounded-md border border-gray-300 text-sm focus:ring-pink-bright focus:border-pink-bright">
 
         
@@ -25,10 +25,10 @@
 
     <!-- Filtro Marca -->
     <div class="flex items-center">
-        <span class="text-sm text-gray-700 mr-2">Marca:</span>
+        <span class="text-sm text-gray-700 mr-2">{% trans "Marca:" %}</span>
         <select name="marca" onchange="this.form.submit()"
                 class="px-2 py-1 rounded-md border border-gray-300 text-sm focus:ring-pink-bright focus:border-pink-bright">
-            <option value="">Todas</option>
+            <option value="">{% trans "Todas" %}</option>
             {% for m in marcas %}
                 <option value="{{ m }}" {% if m == request.GET.marca %}selected{% endif %}>{{ m }}</option>
             {% endfor %}
@@ -37,10 +37,10 @@
 
     <!-- Filtro Tipo -->
     <div class="flex items-center">
-        <span class="text-sm text-gray-700 mr-2">Tipo:</span>
+        <span class="text-sm text-gray-700 mr-2">{% trans "Tipo:" %}</span>
         <select name="tipo" onchange="this.form.submit()"
                 class="px-2 py-1 rounded-md border border-gray-300 text-sm focus:ring-pink-bright focus:border-pink-bright">
-            <option value="">Todos</option>
+            <option value="">{% trans "Todos" %}</option>
             {% for t in tipos %}
                 <option value="{{ t }}" {% if t == request.GET.tipo %}selected{% endif %}>{{ t }}</option>
             {% endfor %}
@@ -63,20 +63,20 @@
             </div>
             {% else %}
             <div class="w-full h-40 bg-gray-200 flex items-center justify-center rounded-xl mb-3 text-gray-500">
-                Sin imagen
+                {% trans "Sin imagen" %}
             </div>
             {% endif %}
 
             <!-- Info en tarjeta -->
             <h3 class="text-lg font-semibold text-pink-bright">{{ producto.nombreProducto }}</h3>
-            <p class="text-sm text-gray-600">Tipo: {{ producto.tipoProducto }}</p>
-            <p class="text-sm text-gray-600">Marca: {{ producto.marcaProducto }}</p>
-            <p class="text-sm text-gray-600">Cantidad: {{ producto.cantidadDeProducto }}</p>
-            <p class="text-sm text-gray-600">Vence: {{ producto.fechaVencimientoProducto }}</p>
-            <p class="text-sm text-gray-600 font-bold">Precio: ${{ producto.precioDeProducto }}</p>
+            <p class="text-sm text-gray-600">{% trans "Tipo:" %} {{ producto.tipoProducto }}</p>
+            <p class="text-sm text-gray-600">{% trans "Marca:" %} {{ producto.marcaProducto }}</p>
+            <p class="text-sm text-gray-600">{% trans "Cantidad:" %} {{ producto.cantidadDeProducto }}</p>
+            <p class="text-sm text-gray-600">{% trans "Vence:" %} {{ producto.fechaVencimientoProducto }}</p>
+            <p class="text-sm text-gray-600 font-bold">{% trans "Precio:" %} ${{ producto.precioDeProducto }}</p>
         </div>
         {% empty %}
-        <p class="text-center text-gray-500 col-span-3">No hay productos registrados.</p>
+        <p class="text-center text-gray-500 col-span-3">{% trans "No hay productos registrados." %}</p>
         {% endfor %}
     </div>
 </div>
@@ -100,7 +100,7 @@
                      class="w-80 h-80 object-cover rounded-xl shadow-md">
                 {% else %}
                 <div class="w-80 h-80 bg-gray-200 flex items-center justify-center rounded-xl text-gray-500">
-                    Sin imagen
+                    {% trans "Sin imagen" %}
                 </div>
                 {% endif %}
             </div>
@@ -109,15 +109,15 @@
             <div class="flex flex-col justify-between">
                 <div>
                     <h2 class="text-2xl font-bold mb-4 text-gray-800">{{ producto.nombreProducto }}</h2>
-                    <p class="text-base text-gray-700 mb-1"><strong class="text-black">Tipo:</strong> {{ producto.tipoProducto }}</p>
-                    <p class="text-base text-gray-700 mb-1"><strong class="text-black">Marca:</strong> {{ producto.marcaProducto }}</p>
-                    <p class="text-base text-gray-700 mb-1"><strong class="text-black">Cantidad:</strong> {{ producto.cantidadDeProducto }}</p>
-                    <p class="text-base text-gray-700 mb-1"><strong class="text-black">Vencimiento:</strong> {{ producto.fechaVencimientoProducto }}</p>
-                    <p class="text-base text-gray-700 mb-1"><strong class="text-black">Precio:</strong> ${{ producto.precioDeProducto }}</p>
+                    <p class="text-base text-gray-700 mb-1"><strong class="text-black">{% trans "Tipo:" %}</strong> {{ producto.tipoProducto }}</p>
+                    <p class="text-base text-gray-700 mb-1"><strong class="text-black">{% trans "Marca:" %}</strong> {{ producto.marcaProducto }}</p>
+                    <p class="text-base text-gray-700 mb-1"><strong class="text-black">{% trans "Cantidad:" %}</strong> {{ producto.cantidadDeProducto }}</p>
+                    <p class="text-base text-gray-700 mb-1"><strong class="text-black">{% trans "Vencimiento:" %}</strong> {{ producto.fechaVencimientoProducto }}</p>
+                    <p class="text-base text-gray-700 mb-1"><strong class="text-black">{% trans "Precio:" %}</strong> ${{ producto.precioDeProducto }}</p>
                     
                     {% if producto.productoReserva %}
                     <p class="text-base text-gray-700 mt-3">
-                        <strong class="text-black">Reserva asociada:</strong> {{ producto.productoReserva }}
+                        <strong class="text-black">{% trans "Reserva asociada:" %}</strong> {{ producto.productoReserva }}
                     </p>
                     {% endif %}
                 </div>
@@ -129,7 +129,7 @@
                         <input type="hidden" name="producto_id" value="{{ producto.idProducto }}">
                         <button type="submit"
                             class="block w-full bg-pink-bright hover:bg-pink-bright-dark text-white text-center py-4 rounded-xl shadow-md font-semibold transition duration-300 text-lg">
-                            Añadir a reserva
+                            {% trans "Añadir a reserva" %}
                         </button>
                     </form>
                 </div>

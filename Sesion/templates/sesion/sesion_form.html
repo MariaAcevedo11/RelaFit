@@ -1,9 +1,10 @@
 <!--Autores: Jose Cardenas -->
 
 {% extends "base.html" %}
+{% load i18n %}
 {% block content %}
 <h1 class="text-2xl font-bold mb-4">
-  {% if object %}Editar Sesión{% else %}Nueva Sesión{% endif %}
+  {% if object %}{% trans "Editar Sesión" %}{% else %}{% trans "Nueva Sesión" %}{% endif %}
 </h1>
 
 <form method="post" enctype="multipart/form-data" class="space-y-4">
@@ -11,8 +12,8 @@
   {{ form.as_p }}
 
   <button type="submit" class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded shadow">
-    💾 Guardar
+    💾 {% trans "Guardar" %}
   </button>
-  <a href="{% url 'sesiones_list' %}" class="ml-2 text-gray-600">Cancelar</a>
+  <a href="{% url 'sesiones_list' %}" class="ml-2 text-gray-600">{% trans "Cancelar" %}</a>
 </form>
 {% endblock %}

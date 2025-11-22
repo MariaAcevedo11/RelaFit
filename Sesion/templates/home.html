@@ -1,11 +1,11 @@
 <!--Autores: María Acevedo -->
 
 {% extends "base.html" %}
-
+{% load i18n %}
 {% block content %}
 <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Sesiones Disponibles</h2>
-    <h3 class="text-lg font-light text-gray-700 mb-6 text-center">Conoce e integrate en nuestras sesiones de relajación, tonificación y mucho más.</h3>
+    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">{% trans "Sesiones Disponibles" %}</h2>
+    <h3 class="text-lg font-light text-gray-700 mb-6 text-center">{% trans "Conoce e integrate en nuestras sesiones de relajación, tonificación y mucho más." %}</h3>
 
         <!-- Filtros y botón en misma línea -->
     <div class="flex items-center justify-between mb-8">
@@ -13,10 +13,10 @@
         <form method="get" class="flex items-center space-x-6">
             <!-- Filtro Categoría -->
             <div class="flex items-center">
-                <span class="text-sm text-gray-700 mr-2">Categoría:</span>
+                <span class="text-sm text-gray-700 mr-2">{% trans "Categoría:" %}</span>
                 <select name="categoria" onchange="this.form.submit()"
                         class="px-2 py-1 rounded-md border border-gray-300 text-sm focus:ring-pink-bright focus:border-pink-bright">
-                    <option value="">Todas</option>
+                    <option value="">{% trans "Todas" %}</option>
                     {% for cat in categorias %}
                         <option value="{{ cat }}" {% if cat == categoria_seleccionada %}selected{% endif %}>{{ cat }}</option>
                     {% endfor %}
@@ -25,22 +25,22 @@
 
             <!-- Filtro Duración -->
             <div class="flex items-center">
-                <span class="text-sm text-gray-700 mr-2">Duración:</span>
+                <span class="text-sm text-gray-700 mr-2">{% trans "Duración:" %}</span>
                 <select name="duracion" onchange="this.form.submit()"
                         class="px-2 py-1 rounded-md border border-gray-300 text-sm focus:ring-pink-bright focus:border-pink-bright">
-                    <option value="">Todas</option>
+                    <option value="">{% trans "Todas" %}</option>
                     {% for dur in duraciones %}
-                        <option value="{{ dur }}" {% if dur == duracion_seleccionada %}selected{% endif %}>{{ dur }} min</option>
+                        <option value="{{ dur }}" {% if dur == duracion_seleccionada %}selected{% endif %}>{{ dur }} {% trans "min" %}</option>
                     {% endfor %}
                 </select>
             </div>
 
             <!-- Filtro Hora -->
             <div class="flex items-center">
-                <span class="text-sm text-gray-700 mr-2">Hora:</span>
+                <span class="text-sm text-gray-700 mr-2">{% trans "Hora:" %}</span>
                 <select name="hora" onchange="this.form.submit()"
                         class="px-2 py-1 rounded-md border border-gray-300 text-sm focus:ring-pink-bright focus:border-pink-bright">
-                    <option value="">Todas</option>
+                    <option value="">{% trans "Todas" %}</option>
                     {% for h in horas %}
                         <option value="{{ h }}" {% if h == hora_seleccionada %}selected{% endif %}>{{ h }}</option>
                     {% endfor %}
@@ -54,13 +54,13 @@
                 <a href="{% url 'home' %}" 
                    class="inline-block bg-gray-500 text-white font-semibold px-6 py-3 rounded-xl shadow-md 
                           transform transition duration-300 hover:scale-105 hover:shadow-lg">
-                    Volver a todas las sesiones
+                    {% trans "Volver a todas las sesiones" %}
                 </a>
             {% else %}
                 <a href="?mejores=1" 
                    class="inline-block bg-gradient-to-r from-pink-bright to-pink-600 text-white font-semibold px-6 py-3 rounded-xl shadow-md 
                           transform transition duration-300 hover:scale-105 hover:shadow-lg">
-                    Ver sesiones con mejores calificaciones
+                    {% trans "Ver sesiones con mejores calificaciones" %}
                 </a>
             {% endif %}
         </div>
@@ -79,18 +79,18 @@
             </div>
             {% else %}
             <div class="w-full h-40 bg-gray-200 flex items-center justify-center rounded-xl mb-3 text-gray-500">
-                Sin imagen
+                {% trans "Sin imagen" %}
             </div>
             {% endif %}
 
             <!-- Info -->
             <h3 class="text-lg font-semibold text-pink-bright">{{ sesion.nombreSesion }}</h3>
-            <p class="text-sm text-gray-600">Categoría: {{ sesion.categoriaSesion }}</p>
-            <p class="text-sm text-gray-600">Duración: {{ sesion.duracionSesion }} min</p>
-            <p class="text-sm text-gray-600">Hora: {{ sesion.horaSesion }}</p>
+            <p class="text-sm text-gray-600">{% trans "Categoría:" %} {{ sesion.categoriaSesion }}</p>
+            <p class="text-sm text-gray-600">{% trans "Duración:" %} {{ sesion.duracionSesion }} {% trans "min" %}</p>
+            <p class="text-sm text-gray-600">{% trans "Hora:" %} {{ sesion.horaSesion }}</p>
         </a>
         {% empty %}
-        <p class="text-center text-gray-500 col-span-3">No hay sesiones registradas.</p>
+        <p class="text-center text-gray-500 col-span-3">{% trans "No hay sesiones registradas." %}</p>
         {% endfor %}
     </div>
 
@@ -98,7 +98,7 @@
 <!-- Sección del video integrado -->
 <div class="mt-16 bg-white shadow-xl rounded-3xl p-10 max-w-6xl mx-auto">
     <h2 class="text-3xl font-extrabold text-pink-bright text-center mb-6">
-        ¡Prueba también el origami! Relajación garantizada
+        {% trans "¡Prueba también el origami! Relajación garantizada" %}
     </h2>
 
     <div class="flex justify-center">

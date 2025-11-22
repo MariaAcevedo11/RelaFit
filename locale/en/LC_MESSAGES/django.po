@@ -1,0 +1,531 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-21 20:06-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: .\Sesion\forms.py:27
+msgid "Debes dar una calificación con estrellas."
+msgstr "You must give a rating with stars."
+
+#: .\Sesion\forms.py:29
+msgid "Debes escribir un comentario."
+msgstr "You must write a comment."
+
+#: .\Sesion\forms.py:129 .\Sesion\templates\cupon\cupon_list.html:30
+msgid "Activo"
+msgstr "Active"
+
+#: .\Sesion\forms.py:130 .\Sesion\templates\cupon\cupon_list.html:32
+msgid "Inactivo"
+msgstr "Inactive"
+
+#: .\Sesion\models.py:36
+msgid ""
+"Reseña de {self.reseñaUsuario.nombreCompletoUsuario} - {self.reseñaSesion."
+"nombreSesion}"
+msgstr ""
+"Review by {self.reseñaUsuario.nombreCompletoUsuario} - {self.reseñaSesion."
+"nombreSesion}"
+
+#: .\Sesion\models.py:72
+msgid "Activa"
+msgstr "Active"
+
+#: .\Sesion\models.py:72
+msgid "Enviada"
+msgstr "Sent"
+
+#: .\Sesion\models.py:77
+#, python-brace-format
+msgid "Reserva {self.idReserva} de {self.usuario.nombreCompletoUsuario}"
+msgstr "Booking {self.idReserva} by {self.usuario.nombreCompletoUsuario}"
+
+#: .\Sesion\models.py:89
+msgid "Cliente"
+msgstr "Client"
+
+#: .\Sesion\models.py:89
+msgid "Administrador"
+msgstr "Administrator"
+
+#: .\Sesion\templates\base.html:46 .\Sesion\templates\base.html:124
+msgid "Gestionar Productos"
+msgstr "Manage Products"
+
+#: .\Sesion\templates\base.html:50 .\Sesion\templates\base.html:125
+msgid "Gestionar Sesiones"
+msgstr "Manage Sessions"
+
+#: .\Sesion\templates\base.html:54
+msgid "Gestionar Cupones"
+msgstr "Manage Coupons"
+
+#: .\Sesion\templates\base.html:56 .\Sesion\templates\base.html:75
+#: .\Sesion\templates\base.html:126 .\Sesion\templates\base.html:133
+msgid "Hola,"
+msgstr "Hello,"
+
+#: .\Sesion\templates\base.html:59 .\Sesion\templates\base.html:78
+#: .\Sesion\templates\base.html:127 .\Sesion\templates\base.html:134
+msgid "Cerrar sesión"
+msgstr "Logout"
+
+#: .\Sesion\templates\base.html:69 .\Sesion\templates\base.html:89
+#: .\Sesion\templates\base.html:131 .\Sesion\templates\base.html:139
+msgid "Productos"
+msgstr "Products"
+
+#: .\Sesion\templates\base.html:73 .\Sesion\templates\base.html:93
+#: .\Sesion\templates\base.html:132 .\Sesion\templates\base.html:140
+msgid "Reserva"
+msgstr "Booking"
+
+#: .\Sesion\templates\base.html:97 .\Sesion\templates\base.html:141
+msgid "Login"
+msgstr "Login"
+
+#: .\Sesion\templates\base.html:101 .\Sesion\templates\base.html:142
+msgid "Registro"
+msgstr "Register"
+
+#: .\Sesion\templates\base.html:160
+msgid "RelaFit"
+msgstr "RelaFit"
+
+#: .\Sesion\templates\cupon\cupon_form.html:7
+msgid "Editar Cupón"
+msgstr "Edit Coupon"
+
+#: .\Sesion\templates\cupon\cupon_form.html:7
+#: .\Sesion\templates\cupon\cupon_list.html:10
+msgid "Nuevo Cupón"
+msgstr "New Coupon"
+
+#: .\Sesion\templates\cupon\cupon_form.html:16
+#: .\Sesion\templates\producto\producto_form.html:16
+#: .\Sesion\templates\sesion\sesion_form.html:15
+msgid "Guardar"
+msgstr "Save"
+
+#: .\Sesion\templates\cupon\cupon_form.html:19
+#: .\Sesion\templates\cupon\cupon_list.html:51
+#: .\Sesion\templates\producto\producto_form.html:18
+#: .\Sesion\templates\producto\productos_list.html:46
+#: .\Sesion\templates\sesion\sesion_form.html:17
+#: .\Sesion\templates\sesion\sesiones_list.html:48
+msgid "Cancelar"
+msgstr "Cancel"
+
+#: .\Sesion\templates\cupon\cupon_list.html:6
+msgid "Gestión de Cupones"
+msgstr "Coupon Management"
+
+#: .\Sesion\templates\cupon\cupon_list.html:16
+msgid "Código"
+msgstr "Code"
+
+#: .\Sesion\templates\cupon\cupon_list.html:17
+msgid "Descuento"
+msgstr "Discount"
+
+#: .\Sesion\templates\cupon\cupon_list.html:18
+msgid "Estado"
+msgstr "Status"
+
+#: .\Sesion\templates\cupon\cupon_list.html:19
+msgid "Expira"
+msgstr "Expires"
+
+#: .\Sesion\templates\cupon\cupon_list.html:20
+#: .\Sesion\templates\producto\productos_list.html:21
+#: .\Sesion\templates\sesion\sesiones_list.html:22
+msgid "Acciones"
+msgstr "Actions"
+
+#: .\Sesion\templates\cupon\cupon_list.html:38
+#: .\Sesion\templates\producto\productos_list.html:33
+#: .\Sesion\templates\sesion\sesiones_list.html:35
+msgid "Editar"
+msgstr "Edit"
+
+#: .\Sesion\templates\cupon\cupon_list.html:41
+#: .\Sesion\templates\cupon\cupon_list.html:56
+#: .\Sesion\templates\producto\productos_list.html:36
+#: .\Sesion\templates\producto\productos_list.html:51
+#: .\Sesion\templates\sesion\sesiones_list.html:38
+#: .\Sesion\templates\sesion\sesiones_list.html:53
+msgid "Eliminar"
+msgstr "Delete"
+
+#: .\Sesion\templates\cupon\cupon_list.html:47
+#: .\Sesion\templates\producto\productos_list.html:42
+#: .\Sesion\templates\sesion\sesiones_list.html:44
+msgid "Confirmar eliminación"
+msgstr "Confirm deletion"
+
+#: .\Sesion\templates\cupon\cupon_list.html:48
+#, python-format
+msgid ""
+"¿Estás seguro de que deseas eliminar el cupón <strong>%(codigo)s</strong>?"
+msgstr "Are you sure you want to delete the coupon <strong>%(codigo)s</strong>?"
+
+#: .\Sesion\templates\cupon\cupon_list.html:66
+msgid "No hay cupones registrados."
+msgstr "No coupons registered."
+
+#: .\Sesion\templates\home.html:7
+msgid "Sesiones Disponibles"
+msgstr "Available Sessions"
+
+#: .\Sesion\templates\home.html:8
+msgid ""
+"Conoce e integrate en nuestras sesiones de relajación, tonificación y mucho "
+"más."
+msgstr ""
+"Meet and join our relaxation, toning and much more sessions."
+
+#: .\Sesion\templates\home.html:16 .\Sesion\templates\home.html:88
+#: .\Sesion\templates\sesion\sesion.html:25
+msgid "Categoría:"
+msgstr "Category:"
+
+#: .\Sesion\templates\home.html:19 .\Sesion\templates\home.html:31
+#: .\Sesion\templates\home.html:43
+#: .\Sesion\templates\producto\producto.html:31
+msgid "Todas"
+msgstr "All"
+
+#: .\Sesion\templates\home.html:28 .\Sesion\templates\home.html:89
+#: .\Sesion\templates\sesion\sesion.html:26
+msgid "Duración:"
+msgstr "Duration:"
+
+#: .\Sesion\templates\home.html:33 .\Sesion\templates\home.html:89
+#: .\Sesion\templates\sesion\sesion.html:26
+#: .\Sesion\templates\sesion\sesiones_list.html:30
+msgid "min"
+msgstr "min"
+
+#: .\Sesion\templates\home.html:40 .\Sesion\templates\home.html:90
+#: .\Sesion\templates\sesion\sesion.html:27
+msgid "Hora:"
+msgstr "Time:"
+
+#: .\Sesion\templates\home.html:57
+msgid "Volver a todas las sesiones"
+msgstr "Back to all sessions"
+
+#: .\Sesion\templates\home.html:63
+msgid "Ver sesiones con mejores calificaciones"
+msgstr "View highest rated sessions"
+
+#: .\Sesion\templates\home.html:82
+#: .\Sesion\templates\producto\producto.html:66
+#: .\Sesion\templates\producto\producto.html:103
+#: .\Sesion\templates\sesion\sesion.html:17
+msgid "Sin imagen"
+msgstr "No image"
+
+#: .\Sesion\templates\home.html:93
+#: .\Sesion\templates\sesion\sesiones_list.html:63
+msgid "No hay sesiones registradas."
+msgstr "No sessions registered."
+
+#: .\Sesion\templates\home.html:101
+msgid "¡Prueba también el origami! Relajación garantizada"
+msgstr "Try origami too! Guaranteed relaxation"
+
+#: .\Sesion\templates\producto\producto.html:6
+msgid "Productos Disponibles"
+msgstr "Available Products"
+
+#: .\Sesion\templates\producto\producto.html:7
+msgid "Conoce y adquiere nuestros productos"
+msgstr "Meet and purchase our products"
+
+#: .\Sesion\templates\producto\producto.html:17
+msgid "Buscar"
+msgstr "Search"
+
+#: .\Sesion\templates\producto\producto.html:20
+msgid "Buscar por nombre..."
+msgstr "Search by name..."
+
+#: .\Sesion\templates\producto\producto.html:28
+#: .\Sesion\templates\producto\producto.html:73
+#: .\Sesion\templates\producto\producto.html:112
+msgid "Marca:"
+msgstr "Brand:"
+
+#: .\Sesion\templates\producto\producto.html:40
+#: .\Sesion\templates\producto\producto.html:72
+#: .\Sesion\templates\producto\producto.html:112
+msgid "Tipo:"
+msgstr "Type:"
+
+#: .\Sesion\templates\producto\producto.html:43
+msgid "Todos"
+msgstr "All"
+
+#: .\Sesion\templates\producto\producto.html:74
+#: .\Sesion\templates\producto\producto.html:113
+msgid "Cantidad:"
+msgstr "Quantity:"
+
+#: .\Sesion\templates\producto\producto.html:75
+msgid "Vence:"
+msgstr "Expires:"
+
+#: .\Sesion\templates\producto\producto.html:76
+#: .\Sesion\templates\producto\producto.html:116
+#: .\Sesion\templates\sesion\sesion.html:28
+msgid "Precio:"
+msgstr "Price:"
+
+#: .\Sesion\templates\producto\producto.html:79
+#: .\Sesion\templates\producto\productos_list.html:61
+msgid "No hay productos registrados."
+msgstr "No products registered."
+
+#: .\Sesion\templates\producto\producto.html:115
+msgid "Vencimiento:"
+msgstr "Expiration:"
+
+#: .\Sesion\templates\producto\producto.html:120
+msgid "Reserva asociada:"
+msgstr "Associated booking:"
+
+#: .\Sesion\templates\producto\producto.html:132
+msgid "Añadir a reserva"
+msgstr "Add to booking"
+
+#: .\Sesion\templates\producto\producto_form.html:8
+msgid "Editar Producto"
+msgstr "Edit Product"
+
+#: .\Sesion\templates\producto\producto_form.html:8
+#: .\Sesion\templates\producto\productos_list.html:11
+msgid "Nuevo Producto"
+msgstr "New Product"
+
+#: .\Sesion\templates\producto\productos_list.html:5
+msgid "Gestión de Productos"
+msgstr "Product Management"
+
+#: .\Sesion\templates\producto\productos_list.html:17
+#: .\Sesion\templates\sesion\sesiones_list.html:17
+msgid "Nombre"
+msgstr "Name"
+
+#: .\Sesion\templates\producto\productos_list.html:18
+msgid "Tipo"
+msgstr "Type"
+
+#: .\Sesion\templates\producto\productos_list.html:19
+msgid "Cantidad"
+msgstr "Quantity"
+
+#: .\Sesion\templates\producto\productos_list.html:20
+#: .\Sesion\templates\sesion\sesiones_list.html:20
+msgid "Precio"
+msgstr "Price"
+
+#: .\Sesion\templates\producto\productos_list.html:43
+#, python-format
+msgid "¿Estás seguro de que deseas eliminar <strong>%(nombre)s</strong>?"
+msgstr "Are you sure you want to delete <strong>%(nombre)s</strong>?"
+
+#: .\Sesion\templates\sesion\sesion.html:31
+msgid "Descripción:"
+msgstr "Description:"
+
+#: .\Sesion\templates\sesion\sesion.html:41
+msgid "Reservar"
+msgstr "Book"
+
+#: .\Sesion\templates\sesion\sesion.html:52
+msgid "Ñadir Reseña"
+msgstr "Add Review"
+
+#: .\Sesion\templates\sesion\sesion.html:68
+msgid "Calificación:"
+msgstr "Rating:"
+
+#: .\Sesion\templates\sesion\sesion.html:85
+msgid "Comentario:"
+msgstr "Comment:"
+
+#: .\Sesion\templates\sesion\sesion.html:92
+msgid "Publicar Reseña"
+msgstr "Publish Review"
+
+#: .\Sesion\templates\sesion\sesion.html:96
+msgid "Inicia sesión para dejar una reseña."
+msgstr "Login to leave a review."
+
+#: .\Sesion\templates\sesion\sesion.html:102
+msgid "Promedio de reseñas:"
+msgstr "Average rating:"
+
+#: .\Sesion\templates\sesion\sesion.html:108
+msgid "Reseñas"
+msgstr "Reviews"
+
+#: .\Sesion\templates\sesion\sesion.html:133
+msgid "No hay reseñas para esta sesión."
+msgstr "No reviews for this session."
+
+#: .\Sesion\templates\sesion\sesion_form.html:7
+msgid "Editar Sesión"
+msgstr "Edit Session"
+
+#: .\Sesion\templates\sesion\sesion_form.html:7
+#: .\Sesion\templates\sesion\sesiones_list.html:11
+msgid "Nueva Sesión"
+msgstr "New Session"
+
+#: .\Sesion\templates\sesion\sesiones_list.html:6
+msgid "Gestión de Sesiones"
+msgstr "Session Management"
+
+#: .\Sesion\templates\sesion\sesiones_list.html:18
+msgid "Categoría"
+msgstr "Category"
+
+#: .\Sesion\templates\sesion\sesiones_list.html:19
+msgid "Duración"
+msgstr "Duration"
+
+#: .\Sesion\templates\sesion\sesiones_list.html:21
+msgid "Hora"
+msgstr "Time"
+
+#: .\Sesion\templates\sesion\sesiones_list.html:45
+#, python-format
+msgid "¿Seguro que deseas eliminar la sesión <strong>%(nombre)s</strong>?"
+msgstr "Are you sure you want to delete the session <strong>%(nombre)s</strong>?"
+
+#: .\Sesion\templates\usuario\login.html:7
+msgid "Iniciar Sesión"
+msgstr "Login"
+
+#: .\Sesion\templates\usuario\login.html:19
+#: .\Sesion\templates\usuario\registro.html:26
+msgid "Correo Electrónico"
+msgstr "Email"
+
+#: .\Sesion\templates\usuario\login.html:25
+#: .\Sesion\templates\usuario\registro.html:32
+msgid "Contraseña"
+msgstr "Password"
+
+#: .\Sesion\templates\usuario\login.html:31
+msgid "Entrar"
+msgstr "Login"
+
+#: .\Sesion\templates\usuario\login.html:36
+msgid "¿No tienes cuenta?"
+msgstr "Don't have an account?"
+
+#: .\Sesion\templates\usuario\login.html:37
+msgid "Regístrate aquí"
+msgstr "Register here"
+
+#: .\Sesion\templates\usuario\registro.html:8
+msgid "Registro de Usuario"
+msgstr "User Registration"
+
+#: .\Sesion\templates\usuario\registro.html:20
+msgid "Nombre Completo"
+msgstr "Full Name"
+
+#: .\Sesion\templates\usuario\registro.html:38
+msgid "Confirmar Contraseña"
+msgstr "Confirm Password"
+
+#: .\Sesion\templates\usuario\registro.html:45
+msgid "Registrarse"
+msgstr "Register"
+
+#: .\Sesion\templates\usuario\registro.html:50
+msgid "¿Ya tienes cuenta?"
+msgstr "Already have an account?"
+
+#: .\Sesion\templates\usuario\registro.html:51
+msgid "Inicia sesión"
+msgstr "Login"
+
+#: .\Sesion\views.py:103
+msgid "Debes ingresar calificación y comentario."
+msgstr "You must enter a rating and comment."
+
+#: .\Sesion\views.py:113
+msgid "Tu reseña fue publicada con éxito!"
+msgstr "Your review was published successfully!"
+
+#: .\Sesion\views.py:141
+msgid "Usuario o contraseña inválidos"
+msgstr "Invalid username or password"
+
+#: .\Sesion\views.py:158
+msgid "Las contraseñas no coinciden"
+msgstr "Passwords do not match"
+
+#: .\Sesion\views.py:160
+msgid "El correo ya está registrado"
+msgstr "Email is already registered"
+
+#: .\Sesion\views.py:241
+msgid "Reserva confirmada! Muchas gracias por tu preferencia."
+msgstr "Booking confirmed! Thank you very much for your preference."
+
+#: .\Sesion\views.py:249
+#, python-brace-format
+msgid "{producto.nombreProducto} fue eliminado de tu reserva."
+msgstr "{producto.nombreProducto} was removed from your booking."
+
+#: .\Sesion\views.py:256
+#, python-brace-format
+msgid "{sesion.nombreSesion} fue eliminada de tu reserva."
+msgstr "{sesion.nombreSesion} was removed from your booking."
+
+#: .\Sesion\views.py:263
+#, python-brace-format
+msgid "{producto.nombreProducto} agregado a tu reserva."
+msgstr "{producto.nombreProducto} added to your booking."
+
+#: .\Sesion\views.py:269
+#, python-brace-format
+msgid "{sesion.nombreSesion} agregada a tu reserva."
+msgstr "{sesion.nombreSesion} added to your booking."
+
+#: .\Sesion\views.py:279
+msgid "El cupón está vencido."
+msgstr "The coupon has expired."
+
+#: .\Sesion\views.py:283
+msgid "El cupón ya fue usado en otra reserva."
+msgstr "The coupon has already been used in another booking."
+
+#: .\Sesion\views.py:290
+#, python-brace-format
+msgid "Cupón {codigo_cupon} aplicado con éxito."
+msgstr "Coupon {codigo_cupon} applied successfully."
+
+#: .\Sesion\views.py:293
+msgid "Cupón inválido."
+msgstr "Invalid coupon."
