@@ -476,8 +476,6 @@ def verVideo(request):
     })
 
 
-
-
 # Para consumir la api de otro equipo: 
 
 
