@@ -479,15 +479,15 @@ def verVideo(request):
 # Para consumir la api de otro equipo: 
 
 
-def productosAliados(request):
-    url = ""  # URL API del equipo 1 Proximamente a poner
+def productosAliados(request): 
+    url = "http://54.90.195.251/api/products/"
 
     try:
         response = requests.get(url)
-        data = response.json()
-        productos = data.get("productos", [])
-    except:
+        productos = response.json()   # Debe llegar una lista
+    except Exception as e:
         productos = []
 
     return render(request, "productos_aliados.html", {"productos": productos})
+
 
