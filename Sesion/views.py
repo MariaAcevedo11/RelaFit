@@ -190,8 +190,7 @@ class ProductoPageView(TemplateView):
         tipo = self.request.GET.get("tipo")
         precio_min = self.request.GET.get("precio_min")
         precio_max = self.request.GET.get("precio_max")
-        nombre = self.request.GET.get("nombre")  # 👈 nuevo filtro
-
+        nombre = self.request.GET.get("nombre") 
         if marca:  
             productos = productos.filter(marcaProducto__icontains=marca)
         
@@ -439,6 +438,7 @@ def apiProductos(request):
                 "cantidad": p.cantidadDeProducto,
                 "fechaVencimiento": p.fechaVencimientoProducto,
                 "precio": p.precioDeProducto,
+                "imagenUrl": request.build_absolute_uri(p.imagenProducto.url) if p.imagenProducto else None,
                 "url": request.build_absolute_uri("/producto/"),
             }
             for p in productos
@@ -446,6 +446,7 @@ def apiProductos(request):
     }
 
     return JsonResponse(data)
+
 
 
 
@@ -473,4 +474,22 @@ def verVideo(request):
         "video": video,
         "video_id": video_id,
     })
+
+
+
+
+# Para consumir la api de otro equipo: 
+
+
+def productosAliados(request):
+    url = ""  # URL API del equipo 1 Proximamente a poner
+
+    try:
+        response = requests.get(url)
+        data = response.json()
+        productos = data.get("productos", [])
+    except:
+        productos = []
+
+    return render(request, "productos_aliados.html", {"productos": productos})
 

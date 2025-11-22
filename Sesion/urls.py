@@ -2,7 +2,7 @@
 
 from django.urls import path 
 from .views import HomePageView, LoginPageView, RegistroPageView, ProductoPageView, LogoutPageView, SesionPageView, ProductoListView, ProductoCreateView, ProductoUpdateView, ProductoDeleteView, SesionListView, SesionCreateView, SesionUpdateView, SesionDeleteView, ReservaPageView, CuponListView, CuponCreateView, CuponUpdateView, CuponDeleteView
-from .views import verVideo,  apiProductos
+from .views import verVideo,  apiProductos, productosAliados
 
 urlpatterns = [
     path("", HomePageView.as_view(), name = 'home'), 
@@ -27,6 +27,8 @@ urlpatterns = [
     path("api/productos/", apiProductos, name="api_productos"),
     path("producto/<int:idProducto>/", ProductoPageView.as_view() , name="verProducto"),  
     path("video/", verVideo, name="verVideo"),
+    path("productos-aliados/", productosAliados, name="productos_aliados"),
+
 
 
 ]

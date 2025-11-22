@@ -31,6 +31,10 @@ ALLOWED_HOSTS = []
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+USE_THOUSAND_SEPARATOR = True
+THOUSAND_SEPARATOR = '.'
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,6 +46,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'Sesion.apps.SesionConfig',
     "widget_tweaks",
+
 ]
 
 MIDDLEWARE = [

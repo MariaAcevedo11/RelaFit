@@ -1,6 +1,7 @@
 <!--Autores: Gabriela Sanabria -->
 {% extends "base.html" %}
 {% load i18n %}
+{% load filtros %}
 {% block content %}
 <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
     <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">{% trans "Productos Disponibles" %}</h2>
@@ -73,7 +74,7 @@
             <p class="text-sm text-gray-600">{% trans "Marca:" %} {{ producto.marcaProducto }}</p>
             <p class="text-sm text-gray-600">{% trans "Cantidad:" %} {{ producto.cantidadDeProducto }}</p>
             <p class="text-sm text-gray-600">{% trans "Vence:" %} {{ producto.fechaVencimientoProducto }}</p>
-            <p class="text-sm text-gray-600 font-bold">{% trans "Precio:" %} ${{ producto.precioDeProducto }}</p>
+            <p class="text-sm text-gray-600 font-bold">{% trans "Precio:" %} ${{ producto.precioDeProducto|miles }} COP</p>
         </div>
         {% empty %}
         <p class="text-center text-gray-500 col-span-3">{% trans "No hay productos registrados." %}</p>
@@ -113,7 +114,7 @@
                     <p class="text-base text-gray-700 mb-1"><strong class="text-black">{% trans "Marca:" %}</strong> {{ producto.marcaProducto }}</p>
                     <p class="text-base text-gray-700 mb-1"><strong class="text-black">{% trans "Cantidad:" %}</strong> {{ producto.cantidadDeProducto }}</p>
                     <p class="text-base text-gray-700 mb-1"><strong class="text-black">{% trans "Vencimiento:" %}</strong> {{ producto.fechaVencimientoProducto }}</p>
-                    <p class="text-base text-gray-700 mb-1"><strong class="text-black">{% trans "Precio:" %}</strong> ${{ producto.precioDeProducto }}</p>
+                    <p class="text-base text-gray-700 mb-1"><strong class="text-black">{% trans "Precio:" %}</strong> ${{ producto.precioDeProducto|miles }} COP</p>
                     
                     {% if producto.productoReserva %}
                     <p class="text-base text-gray-700 mt-3">

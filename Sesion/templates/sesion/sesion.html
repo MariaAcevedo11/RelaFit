@@ -1,8 +1,9 @@
 <!--Autores: María Acevedo -->
-
 {% extends "base.html" %}
+{% load filtros %}
 {% load i18n %}
 {% block content %}
+
 <div class="max-w-5xl mx-auto py-6 sm:px-6 lg:px-8">
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -25,7 +26,7 @@
             <p><strong>{% trans "Categoría:" %}</strong> {{ sesion.categoriaSesion }}</p>
             <p><strong>{% trans "Duración:" %}</strong> {{ sesion.duracionSesion }} {% trans "min" %}</p>
             <p><strong>{% trans "Hora:" %}</strong> {{ sesion.horaSesion }}</p>
-            <p><strong>{% trans "Precio:" %}</strong> ${{ sesion.precioSesion }}</p>
+            <p><strong>Precio:</strong> ${{ sesion.precioSesion|miles }} COP</p>
 
             <p class="mt-4 leading-relaxed">
                 <strong>{% trans "Descripción:" %}</strong><br>{{ sesion.descripcionSesion }}
@@ -49,7 +50,7 @@
 
     <!-- Formulario reseña -->
     {% if request.session.usuario_id %}
-        <h3 class="text-lg font-semibold text-gray-800 mb-2">{% trans "Ñadir Reseña" %}</h3>
+        <h3 class="text-lg font-semibold text-gray-800 mb-2">{% trans "Añadir Reseña" %}</h3>
 
         <!-- Mensajes -->
         {% if messages %}

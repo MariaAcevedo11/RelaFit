@@ -15,7 +15,7 @@ class Sesion(models.Model):
     categoriaSesion = models.CharField(blank = False, null = False)
     descripcionSesion = models.TextField(blank = False, null = False)
     imagenSesion = models.ImageField(upload_to="sesiones/" , blank = False, null = False)
-    precioSesion = models.FloatField(blank = False, null = False)
+    precioSesion = models.IntegerField(blank=False, null=False)
     duracionSesion = models.IntegerField(blank = False, null = False) #en minutos
     horaSesion = models.CharField(blank = False, null = False)
     reservaSesion = models.ForeignKey('Reserva', on_delete=models.CASCADE, related_name="sesion", blank = True, null = True)
@@ -112,7 +112,7 @@ class Producto(models.Model):
     marcaProducto = models.CharField(max_length=50, blank = False, null = False)
     cantidadDeProducto = models.IntegerField(blank = False, null = False)
     fechaVencimientoProducto = models.DateField(blank = False, null = False)
-    precioDeProducto = models.FloatField(blank = False, null = False)
+    precioDeProducto = models.IntegerField(blank = False, null = False)
     imagenProducto = models.ImageField(upload_to="productos/", blank = False, null = False)
 
     def __str__(self):
