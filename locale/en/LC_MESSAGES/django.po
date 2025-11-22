@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-21 20:06-0500\n"
+"POT-Creation-Date: 2025-11-21 20:16-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
 #: .\Sesion\forms.py:27
 msgid "Debes dar una calificación con estrellas."
 msgstr "You must give a rating with stars."
@@ -86,6 +87,7 @@ msgstr "Logout"
 
 #: .\Sesion\templates\base.html:69 .\Sesion\templates\base.html:89
 #: .\Sesion\templates\base.html:131 .\Sesion\templates\base.html:139
+#: .\Sesion\templates\reserva\reserva.html:26
 msgid "Productos"
 msgstr "Products"
 
@@ -166,6 +168,8 @@ msgstr "Edit"
 #: .\Sesion\templates\cupon\cupon_list.html:56
 #: .\Sesion\templates\producto\productos_list.html:36
 #: .\Sesion\templates\producto\productos_list.html:51
+#: .\Sesion\templates\reserva\reserva.html:42
+#: .\Sesion\templates\reserva\reserva.html:71
 #: .\Sesion\templates\sesion\sesiones_list.html:38
 #: .\Sesion\templates\sesion\sesiones_list.html:53
 msgid "Eliminar"
@@ -181,7 +185,8 @@ msgstr "Confirm deletion"
 #, python-format
 msgid ""
 "¿Estás seguro de que deseas eliminar el cupón <strong>%(codigo)s</strong>?"
-msgstr "Are you sure you want to delete the coupon <strong>%(codigo)s</strong>?"
+msgstr ""
+"Are you sure you want to delete the coupon <strong>%(codigo)s</strong>?"
 
 #: .\Sesion\templates\cupon\cupon_list.html:66
 msgid "No hay cupones registrados."
@@ -195,10 +200,10 @@ msgstr "Available Sessions"
 msgid ""
 "Conoce e integrate en nuestras sesiones de relajación, tonificación y mucho "
 "más."
-msgstr ""
-"Meet and join our relaxation, toning and much more sessions."
+msgstr "Meet and join our relaxation, toning and much more sessions."
 
 #: .\Sesion\templates\home.html:16 .\Sesion\templates\home.html:88
+#: .\Sesion\templates\reserva\reserva.html:63
 #: .\Sesion\templates\sesion\sesion.html:25
 msgid "Categoría:"
 msgstr "Category:"
@@ -210,17 +215,20 @@ msgid "Todas"
 msgstr "All"
 
 #: .\Sesion\templates\home.html:28 .\Sesion\templates\home.html:89
+#: .\Sesion\templates\reserva\reserva.html:63
 #: .\Sesion\templates\sesion\sesion.html:26
 msgid "Duración:"
 msgstr "Duration:"
 
 #: .\Sesion\templates\home.html:33 .\Sesion\templates\home.html:89
+#: .\Sesion\templates\reserva\reserva.html:63
 #: .\Sesion\templates\sesion\sesion.html:26
 #: .\Sesion\templates\sesion\sesiones_list.html:30
 msgid "min"
 msgstr "min"
 
 #: .\Sesion\templates\home.html:40 .\Sesion\templates\home.html:90
+#: .\Sesion\templates\reserva\reserva.html:63
 #: .\Sesion\templates\sesion\sesion.html:27
 msgid "Hora:"
 msgstr "Time:"
@@ -267,13 +275,15 @@ msgstr "Search by name..."
 
 #: .\Sesion\templates\producto\producto.html:28
 #: .\Sesion\templates\producto\producto.html:73
-#: .\Sesion\templates\producto\producto.html:112
+#: .\Sesion\templates\producto\producto.html:113
+#: .\Sesion\templates\reserva\reserva.html:34
 msgid "Marca:"
 msgstr "Brand:"
 
 #: .\Sesion\templates\producto\producto.html:40
 #: .\Sesion\templates\producto\producto.html:72
 #: .\Sesion\templates\producto\producto.html:112
+#: .\Sesion\templates\reserva\reserva.html:34
 msgid "Tipo:"
 msgstr "Type:"
 
@@ -282,7 +292,7 @@ msgid "Todos"
 msgstr "All"
 
 #: .\Sesion\templates\producto\producto.html:74
-#: .\Sesion\templates\producto\producto.html:113
+#: .\Sesion\templates\producto\producto.html:114
 msgid "Cantidad:"
 msgstr "Quantity:"
 
@@ -348,6 +358,54 @@ msgstr "Price"
 #, python-format
 msgid "¿Estás seguro de que deseas eliminar <strong>%(nombre)s</strong>?"
 msgstr "Are you sure you want to delete <strong>%(nombre)s</strong>?"
+
+#: .\Sesion\templates\reserva\reserva.html:10
+msgid "Mi Reserva"
+msgstr "My Booking"
+
+#: .\Sesion\templates\reserva\reserva.html:50
+msgid "No has agregado productos."
+msgstr "You haven't added any products."
+
+#: .\Sesion\templates\reserva\reserva.html:56
+msgid "Sesiones"
+msgstr "Sessions"
+
+#: .\Sesion\templates\reserva\reserva.html:79
+msgid "No has agregado sesiones."
+msgstr "You haven't added any sessions."
+
+#: .\Sesion\templates\reserva\reserva.html:88
+msgid "Código de cupón"
+msgstr "Coupon code"
+
+#: .\Sesion\templates\reserva\reserva.html:95
+msgid "Aplicar"
+msgstr "Apply"
+
+#: .\Sesion\templates\reserva\reserva.html:100
+msgid "Cupón aplicado:"
+msgstr "Applied coupon:"
+
+#: .\Sesion\templates\reserva\reserva.html:100
+msgid "de descuento"
+msgstr "discount"
+
+#: .\Sesion\templates\reserva\reserva.html:106
+msgid "Total:"
+msgstr "Total:"
+
+#: .\Sesion\templates\reserva\reserva.html:115
+msgid "Confirmar Reserva"
+msgstr "Confirm Booking"
+
+#: .\Sesion\templates\reserva\reserva.html:122
+msgid "¿Estás seguro de que quieres confirmar la reserva?"
+msgstr "Are you sure you want to confirm the booking?"
+
+#: .\Sesion\templates\reserva\reserva.html:131
+msgid "Tu carrito está vacío."
+msgstr "Your cart is empty."
 
 #: .\Sesion\templates\sesion\sesion.html:31
 msgid "Descripción:"
@@ -417,7 +475,8 @@ msgstr "Time"
 #: .\Sesion\templates\sesion\sesiones_list.html:45
 #, python-format
 msgid "¿Seguro que deseas eliminar la sesión <strong>%(nombre)s</strong>?"
-msgstr "Are you sure you want to delete the session <strong>%(nombre)s</strong>?"
+msgstr ""
+"Are you sure you want to delete the session <strong>%(nombre)s</strong>?"
 
 #: .\Sesion\templates\usuario\login.html:7
 msgid "Iniciar Sesión"
