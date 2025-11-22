@@ -420,34 +420,6 @@ class CuponDeleteView(DeleteView):
     template_name = "cupon/cupon_list"
     success_url = reverse_lazy("cupon_list")
 
-    
-
-#Mandaremos una api de info de productos que tenemos 
-
-
-def apiProductos(request):
-    productos = Producto.objects.filter(cantidadDeProducto__gt=0)
-
-    data = {
-        "productos": [
-            {
-                "id": p.idProducto,
-                "nombre": p.nombreProducto,
-                "tipo": p.tipoProducto,
-                "marca": p.marcaProducto,
-                "cantidad": p.cantidadDeProducto,
-                "fechaVencimiento": p.fechaVencimientoProducto,
-                "precio": p.precioDeProducto,
-                "imagenUrl": request.build_absolute_uri(p.imagenProducto.url) if p.imagenProducto else None,
-                "url": request.build_absolute_uri("/producto/"),
-            }
-            for p in productos
-        ]
-    }
-
-    return JsonResponse(data)
-
-
 
 
 #Consumiremos una api de youtube :) 

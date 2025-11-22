@@ -1,8 +1,9 @@
 #Autores: María Acevedo, Gabriela Sanabria, Jose Cardenas
 
-from django.urls import path 
+from django.urls import path, include
+from django.contrib import admin
 from .views import HomePageView, LoginPageView, RegistroPageView, ProductoPageView, LogoutPageView, SesionPageView, ProductoListView, ProductoCreateView, ProductoUpdateView, ProductoDeleteView, SesionListView, SesionCreateView, SesionUpdateView, SesionDeleteView, ReservaPageView, CuponListView, CuponCreateView, CuponUpdateView, CuponDeleteView
-from .views import verVideo,  apiProductos, productosAliados
+from .views import verVideo, productosAliados
 
 urlpatterns = [
     path("", HomePageView.as_view(), name = 'home'), 
@@ -24,10 +25,10 @@ urlpatterns = [
     path("panel/cupones/crear/", CuponCreateView.as_view(), name="cupon_form"),
     path("panel/cupones/<int:pk>/editar/", CuponUpdateView.as_view(), name="cupon_form"),
     path("panel/cupones/<int:pk>/eliminar/", CuponDeleteView.as_view(), name="cupon_delete"), 
-    path("api/productos/", apiProductos, name="api_productos"),
-    path("producto/<int:idProducto>/", ProductoPageView.as_view() , name="verProducto"),  
     path("video/", verVideo, name="verVideo"),
     path("productos-aliados/", productosAliados, name="productos_aliados"),
+    path('admin/', admin.site.urls),
+    path('api/', include('api.urls')),
 
 
 

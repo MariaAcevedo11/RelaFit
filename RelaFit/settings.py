@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'Sesion.apps.SesionConfig',
     "widget_tweaks",
+    'rest_framework',
+    'api', 
 
 ]
 
